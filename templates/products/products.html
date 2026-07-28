@@ -14,7 +14,7 @@
     {{ product.category.friendly_name }}
 </p>
 <p>
-    {{ product.price }}
+    Price: £{{ product.price }}
 </p>
 <img src="{{ product.image.url }}" alt="{{ product.name }}">
 <p>
@@ -28,5 +28,9 @@
     {{ product.description|truncatechars:100 }}
 </p>
 </div>
+
+{% empty %}
+
+<p>There are no products available at this moment. Check back soon.</p>
 
 {% endfor %}
