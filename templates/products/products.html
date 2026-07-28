@@ -1,0 +1,32 @@
+<h1>Products</h1>
+
+{% for product in products %}
+
+<div>
+<h2>
+    {{ product.name }}
+</h2>
+
+<p>
+    {{ product.brand.name }}
+</p>
+<p>
+    {{ product.category.friendly_name }}
+</p>
+<p>
+    {{ product.price }}
+</p>
+<img src="{{ product.image.url }}" alt="{{ product.name }}">
+<p>
+    {% if product.stock_quantity > 0 %}
+        In Stock
+    {% else %}
+        Out of Stock
+    {% endif %}
+</p>
+<p>
+    {{ product.description|truncatechars:100 }}
+</p>
+</div>
+
+{% endfor %}
