@@ -3,8 +3,9 @@
 {% for product in products %}
 
 <div>
-<h2>
+<h2><a href="{% url 'product_detail' product.id %}">
     {{ product.name }}
+</a>
 </h2>
 
 <p>
