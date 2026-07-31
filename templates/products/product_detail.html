@@ -8,11 +8,15 @@
 <body>
     <h1>{{ product.name }}</h1>
 
+    <img src="{{ product.image.url }}" alt="Product image">
+
     <h2>Price</h2>
     <p> £{{ product.price }}</p>
-
+    
+    {% if product.description %}
     <h2>Description</h2>
     <p>{{ product.description }}</p>
+    {% endif %}
 
     <h2>Brand</h2>
     <p>{{ product.brand }}</p>
@@ -20,16 +24,21 @@
     <h2>Category</h2>
     <p>{{ product.category }}</p>
 
+
+    {% if product.materials %}
     <h2>Materials</h2>
     <p>{{ product.materials }}</p>
+    {% endif %}
 
     <h2>Measurements/Quantity</h2>
     <p>{{ product.size_or_quantity }}</p>
 
     <h2>Stock</h2>
     <p>{{ product.stock_quantity }}</p>
-
+    
+    {% if product.ingredients %}
     <h2>Ingredients</h2>
     <p>{{ product.ingredients }}</p>
+    {% endif %}
 </body>
 </html>
