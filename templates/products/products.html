@@ -11,10 +11,36 @@
         value="{{ search_term|default:'' }}"
     >
 
-    <button type="submit">
-        Search
-    </button>
+    {% if current_category %}
+        <input
+            type="hidden"
+            name="category"
+            value="{{ current_category }}"
+        >
+    {% endif %}
+
+    <button type="submit">Search</button>
 </form>
+
+<div class="sorting-links">
+
+    <a href="{% url 'all_products' %}?sort=name&direction=asc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}">
+        Name: A–Z
+    </a>
+
+    <a href="{% url 'all_products' %}?sort=name&direction=desc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}">
+        Name: Z–A
+    </a>
+
+    <a href="{% url 'all_products' %}?sort=price&direction=asc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}">
+        Price: Low to High
+    </a>
+
+    <a href="{% url 'all_products' %}?sort=price&direction=desc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}">
+        Price: High to Low
+    </a>
+
+</div>
 
 <a href="{% url 'all_products' %}">
     All Products
@@ -27,39 +53,35 @@
 {% endfor %}
 
 {% for product in products %}
+    <div>
+        <h2>
+            <a href="{% url 'product_detail' product.id %}">
+                {{ product.name }}
+            </a>
+        </h2>
 
-<div>
-<h2><a href="{% url 'product_detail' product.id %}">
-    {{ product.name }}
-</a>
-</h2>
+        <p>{{ product.brand.name }}</p>
+        <p>{{ product.category.friendly_name }}</p>
+        <p>Price: £{{ product.price }}</p>
 
-<p>
-    {{ product.brand.name }}
-</p>
-<p>
-    {{ product.category.friendly_name }}
-</p>
-<p>
-    Price: £{{ product.price }}
-</p>
-{% if product.image %}
-<img src="{{ product.image.url }}" alt="{{ product.name }}">
-{% endif %}
-<p>
-    {% if product.stock_quantity > 0 %}
-        In Stock
-    {% else %}
-        Out of Stock
-    {% endif %}
-</p>
-<p>
-    {{ product.description|truncatechars:100 }}
-</p>
-</div>
+        {% if product.image %}
+            <img
+                src="{{ product.image.url }}"
+                alt="{{ product.name }}"
+            >
+        {% endif %}
+
+        <p>
+            {% if product.stock_quantity > 0 %}
+                In Stock
+            {% else %}
+                Out of Stock
+            {% endif %}
+        </p>
+
+        <p>{{ product.description|truncatechars:100 }}</p>
+    </div>
 
 {% empty %}
-
-<p>There are no products available at this moment. Check back soon.</p>
-
+    <p>There are no products available at this moment. Check back soon.</p>
 {% endfor %}
