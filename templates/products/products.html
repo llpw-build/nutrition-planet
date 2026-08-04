@@ -1,80 +1,130 @@
 <h1>Products</h1>
 
+{% if messages %}
+    {% for message in messages %}
+        <div class="{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
 <form method="GET" action="{% url 'all_products' %}">
-  <label for="product-search">Search products</label>
+    <label for="product-search">Search products</label>
 
-  <input
-    id="product-search"
-    type="search"
-    placeholder="Search products..."
-    name="q"
-    value="{{ search_term|default:'' }}"
-  />
+    <input
+        id="product-search"
+        type="search"
+        placeholder="Search products..."
+        name="q"
+        value="{{ search_term|default:'' }}"
+    >
 
-  {% if current_category %}
-  <input type="hidden" name="category" value="{{ current_category }}" />
-  {% endif %}
+    {% if current_category %}
+        <input
+            type="hidden"
+            name="category"
+            value="{{ current_category }}"
+        >
+    {% endif %}
 
-  <button type="submit">Search</button>
+    <button type="submit">
+        Search
+    </button>
 </form>
 
-<div class="sorting-links">
-  <a
-    href="{% url 'all_products' %}?sort=name&direction=asc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
-  >
-    Name: A–Z
-  </a>
+<h2>Categories</h2>
 
-  <a
-    href="{% url 'all_products' %}?sort=name&direction=desc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
-  >
-    Name: Z–A
-  </a>
-
-  <a
-    href="{% url 'all_products' %}?sort=price&direction=asc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
-  >
-    Price: Low to High
-  </a>
-
-  <a
-    href="{% url 'all_products' %}?sort=price&direction=desc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
-  >
-    Price: High to Low
-  </a>
-</div>
-
-<a href="{% url 'all_products' %}"> All Products </a>
+<a
+    class="{% if not current_category %}active{% endif %}"
+    href="{% url 'all_products' %}"
+>
+    All Products
+</a>
 
 {% for category in categories %}
-<a
-  class="{% if category.name == current_category %}active{% endif %}"
-  href="{% url 'all_products' %}?category={{ category.name }}{% if search_term %}&q={{ search_term }}{% endif %}"
->
-  {{ category.friendly_name }}
-</a>
-{% endfor %} {% for product in products %}
+    <a
+        class="{% if category.name == current_category %}active{% endif %}"
+        href="{% url 'all_products' %}?category={{ category.name }}{% if search_term %}&q={{ search_term }}{% endif %}"
+    >
+        {{ category.friendly_name }}
+    </a>
+{% endfor %}
+
+<h2>Sort By</h2>
+
+<div class="sorting-links">
+
+    <a
+        class="{% if current_sort == 'name' and current_direction == 'asc' %}active{% endif %}"
+        href="{% url 'all_products' %}?sort=name&direction=asc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
+    >
+        Name: A–Z
+    </a>
+
+    <a
+        class="{% if current_sort == 'name' and current_direction == 'desc' %}active{% endif %}"
+        href="{% url 'all_products' %}?sort=name&direction=desc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
+    >
+        Name: Z–A
+    </a>
+
+    <a
+        class="{% if current_sort == 'price' and current_direction == 'asc' %}active{% endif %}"
+        href="{% url 'all_products' %}?sort=price&direction=asc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
+    >
+        Price: Low to High
+    </a>
+
+    <a
+        class="{% if current_sort == 'price' and current_direction == 'desc' %}active{% endif %}"
+        href="{% url 'all_products' %}?sort=price&direction=desc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
+    >
+        Price: High to Low
+    </a>
+
+</div>
+
+{% for product in products %}
+
 <div>
-  <h2>
-    <a href="{% url 'product_detail' product.id %}"> {{ product.name }} </a>
-  </h2>
 
-  <p>{{ product.brand.name }}</p>
-  <p>{{ product.category.friendly_name }}</p>
-  <p>Price: £{{ product.price }}</p>
+    <h2>
+        <a href="{% url 'product_detail' product.id %}">
+            {{ product.name }}
+        </a>
+    </h2>
 
-  {% if product.image %}
-  <img src="{{ product.image.url }}" alt="{{ product.name }}" />
-  {% endif %}
+    <p>{{ product.brand.name }}</p>
 
-  <p>
-    {% if product.stock_quantity > 0 %} In Stock {% else %} Out of Stock {%
-    endif %}
-  </p>
+    <p>{{ product.category.friendly_name }}</p>
 
-  <p>{{ product.description|truncatechars:100 }}</p>
+    <p>Price: £{{ product.price }}</p>
+
+    {% if product.image %}
+        <img
+            src="{{ product.image.url }}"
+            alt="{{ product.name }}"
+        >
+    {% endif %}
+
+    <p>
+        {% if product.stock_quantity > 0 %}
+            In Stock
+        {% else %}
+            Out of Stock
+        {% endif %}
+    </p>
+
+    <p>{{ product.description|truncatechars:100 }}</p>
+
 </div>
 
 {% empty %}
-<p>There are no products available at this moment. Check back soon.</p>
+
+    {% if search_term or current_category %}
+        <p>No products matched your search or filters.</p>
+    {% else %}
+        <p>There are no products available at this moment. Check back soon.</p>
+    {% endif %}
+
 {% endfor %}
