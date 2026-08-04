@@ -16,6 +16,16 @@
     </button>
 </form>
 
+<a href="{% url 'all_products' %}">
+    All Products
+</a>
+
+{% for category in categories %}
+    <a href="{% url 'all_products' %}?category={{ category.name }}{% if search_term %}&q={{ search_term }}{% endif %}">
+        {{ category.friendly_name }}
+    </a>
+{% endfor %}
+
 {% for product in products %}
 
 <div>

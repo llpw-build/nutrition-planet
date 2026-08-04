@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 
-from .models import Product
+from .models import Product, Category
 
 
 def all_products(request):
@@ -50,12 +50,15 @@ def all_products(request):
 
         products = products.order_by(sort_field)
 
+    categories = Category.objects.all()
+
     context = {
         "products": products,
         "search_term": query,
         "current_category": category,
         "current_sort": sort,
         "current_direction": direction,
+        "categories": categories,
     }
 
     return render(
