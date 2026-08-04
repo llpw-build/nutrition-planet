@@ -1,5 +1,21 @@
 <h1>Products</h1>
 
+<form method="GET" action="{% url 'all_products' %}">
+    <label for="product-search">Search products</label>
+
+    <input
+        id="product-search"
+        type="search"
+        placeholder="Search products..."
+        name="q"
+        value="{{ search_term|default:'' }}"
+    >
+
+    <button type="submit">
+        Search
+    </button>
+</form>
+
 {% for product in products %}
 
 <div>
@@ -17,7 +33,9 @@
 <p>
     Price: £{{ product.price }}
 </p>
+{% if product.image %}
 <img src="{{ product.image.url }}" alt="{{ product.name }}">
+{% endif %}
 <p>
     {% if product.stock_quantity > 0 %}
         In Stock
