@@ -1,12 +1,8 @@
-<h1>Products</h1>
+{% extends "base.html" %}
 
-{% if messages %}
-    {% for message in messages %}
-        <div class="{{ message.tags }}">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endif %}
+{% block content %}
+
+<h1>Products</h1>
 
 <form method="GET" action="{% url 'all_products' %}">
     <label for="product-search">Search products</label>
@@ -128,3 +124,5 @@
     {% endif %}
 
 {% endfor %}
+
+{% endblock %}

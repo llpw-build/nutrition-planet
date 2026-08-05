@@ -1,21 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ product.name }}</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
+
     <h1>{{ product.name }}</h1>
 
-    <img src="{{ product.image.url }}" alt="Product image">
+    {% if product.image %}
+        <img
+            src="{{ product.image.url }}"
+            alt="{{ product.name }}"
+        >
+    {% endif %}
 
     <h2>Price</h2>
-    <p> £{{ product.price }}</p>
-    
+    <p>£{{ product.price }}</p>
+
     {% if product.description %}
-    <h2>Description</h2>
-    <p>{{ product.description }}</p>
+        <h2>Description</h2>
+        <p>{{ product.description }}</p>
     {% endif %}
 
     <h2>Brand</h2>
@@ -24,10 +25,9 @@
     <h2>Category</h2>
     <p>{{ product.category }}</p>
 
-
     {% if product.materials %}
-    <h2>Materials</h2>
-    <p>{{ product.materials }}</p>
+        <h2>Materials</h2>
+        <p>{{ product.materials }}</p>
     {% endif %}
 
     <h2>Measurements/Quantity</h2>
@@ -35,10 +35,10 @@
 
     <h2>Stock</h2>
     <p>{{ product.stock_quantity }}</p>
-    
+
     {% if product.ingredients %}
-    <h2>Ingredients</h2>
-    <p>{{ product.ingredients }}</p>
+        <h2>Ingredients</h2>
+        <p>{{ product.ingredients }}</p>
     {% endif %}
-</body>
-</html>
+
+{% endblock %}
