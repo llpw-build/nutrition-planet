@@ -4,34 +4,61 @@
 
 <h1>Products</h1>
 
-<form method="GET" action="{% url 'all_products' %}">
-    <label for="product-search">Search products</label>
+<form
+    method="GET"
+    action="{% url 'all_products' %}"
+    class="row g-2 mb-4"
+>
 
-    <input
-        id="product-search"
-        type="search"
-        placeholder="Search products..."
-        name="q"
-        value="{{ search_term|default:'' }}"
-    >
+    <div class="col-12 col-md-9">
 
-    {% if current_category %}
-        <input
-            type="hidden"
-            name="category"
-            value="{{ current_category }}"
+        <label
+            for="product-search"
+            class="form-label"
         >
-    {% endif %}
+            Search products
+        </label>
 
-    <button type="submit">
-        Search
-    </button>
+        <input
+            id="product-search"
+            type="search"
+            class="form-control"
+            placeholder="Search products..."
+            name="q"
+            value="{{ search_term|default:'' }}"
+        >
+
+        {% if current_category %}
+            <input
+                type="hidden"
+                name="category"
+                value="{{ current_category }}"
+            >
+        {% endif %}
+
+    </div>
+
+    <div class="col-12 col-md-3 d-grid">
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+        >
+            Search
+        </button>
+
+    </div>
+
 </form>
 
-<h2>Categories</h2>
+<h2 class="mt-4 mb-3">
+    Categories
+</h2>
+
+<div class="d-flex flex-wrap gap-2 mb-4">
 
 <a
-    class="{% if not current_category %}active{% endif %}"
+    class="btn btn-outline-primary {% if not current_category %}active{% endif %}"
     href="{% url 'all_products' %}"
 >
     All Products
@@ -39,40 +66,44 @@
 
 {% for category in categories %}
     <a
-        class="{% if category.name == current_category %}active{% endif %}"
+        class="btn btn-outline-primary {% if category.name == current_category %}active{% endif %}"
         href="{% url 'all_products' %}?category={{ category.name }}{% if search_term %}&q={{ search_term }}{% endif %}"
     >
         {{ category.friendly_name }}
     </a>
 {% endfor %}
 
-<h2>Sort By</h2>
+</div>
 
-<div class="sorting-links">
+<h2 class="mt-4 mb-3">
+    Sort By
+</h2>
+
+<div class="d-flex flex-wrap gap-2 mb-4">
 
     <a
-        class="{% if current_sort == 'name' and current_direction == 'asc' %}active{% endif %}"
+        class="btn btn-outline-primary {% if current_sort == 'name' and current_direction == 'asc' %}active{% endif %}"
         href="{% url 'all_products' %}?sort=name&direction=asc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
     >
         Name: A–Z
     </a>
 
     <a
-        class="{% if current_sort == 'name' and current_direction == 'desc' %}active{% endif %}"
+        class="btn btn-outline-primary {% if current_sort == 'name' and current_direction == 'desc' %}active{% endif %}"
         href="{% url 'all_products' %}?sort=name&direction=desc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
     >
         Name: Z–A
     </a>
 
     <a
-        class="{% if current_sort == 'price' and current_direction == 'asc' %}active{% endif %}"
+        class="btn btn-outline-primary {% if current_sort == 'price' and current_direction == 'asc' %}active{% endif %}"
         href="{% url 'all_products' %}?sort=price&direction=asc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
     >
         Price: Low to High
     </a>
 
     <a
-        class="{% if current_sort == 'price' and current_direction == 'desc' %}active{% endif %}"
+        class="btn btn-outline-primary {% if current_sort == 'price' and current_direction == 'desc' %}active{% endif %}"
         href="{% url 'all_products' %}?sort=price&direction=desc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
     >
         Price: High to Low
@@ -80,49 +111,74 @@
 
 </div>
 
-{% for product in products %}
+<div class="row g-4">
 
-<div>
+    {% for product in products %}
 
-    <h2>
-        <a href="{% url 'product_detail' product.id %}">
-            {{ product.name }}
-        </a>
-    </h2>
+        <div class="col-12 col-md-6 col-lg-4">
 
-    <p>{{ product.brand.name }}</p>
+            <div class="card h-100">
 
-    <p>{{ product.category.friendly_name }}</p>
+                {% if product.image %}
+                    <img
+                        src="{{ product.image.url }}"
+                        class="card-img-top"
+                        alt="{{ product.name }}"
+                    >
+                {% endif %}
 
-    <p>Price: £{{ product.price }}</p>
+                <div class="card-body">
 
-    {% if product.image %}
-        <img
-            src="{{ product.image.url }}"
-            alt="{{ product.name }}"
-        >
-    {% endif %}
+                    <h2 class="card-title h5">
+                        <a href="{% url 'product_detail' product.id %}">
+                            {{ product.name }}
+                        </a>
+                    </h2>
 
-    <p>
-        {% if product.stock_quantity > 0 %}
-            In Stock
-        {% else %}
-            Out of Stock
-        {% endif %}
-    </p>
+                    <p class="card-text text-muted">
+                        {{ product.brand.name }}
+                    </p>
 
-    <p>{{ product.description|truncatechars:100 }}</p>
+                    <p class="card-text text-muted">
+                        {{ product.category.friendly_name }}
+                    </p>
+
+                    <p class="card-text fw-bold">
+                        £{{ product.price }}
+                    </p>
+
+                    <p class="card-text text-muted">
+                        {% if product.stock_quantity > 0 %}
+                            In Stock
+                        {% else %}
+                            Out of Stock
+                        {% endif %}
+                    </p>
+
+                    <p class="card-text text-muted  ">
+                        {{ product.description|truncatechars:100 }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <div class="col-12">
+
+            {% if search_term or current_category %}
+                <p>No products matched your search or filters.</p>
+            {% else %}
+                <p>There are no products available at this moment. Check back soon.</p>
+            {% endif %}
+
+        </div>
+
+    {% endfor %}
 
 </div>
-
-{% empty %}
-
-    {% if search_term or current_category %}
-        <p>No products matched your search or filters.</p>
-    {% else %}
-        <p>There are no products available at this moment. Check back soon.</p>
-    {% endif %}
-
-{% endfor %}
 
 {% endblock %}
