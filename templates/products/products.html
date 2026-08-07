@@ -60,17 +60,19 @@
 <a
     class="btn btn-outline-primary {% if not current_category %}active{% endif %}"
     href="{% url 'all_products' %}"
+    {% if not current_category %}aria-current="page"{% endif %}
 >
     All Products
 </a>
 
 {% for category in categories %}
     <a
-        class="btn btn-outline-primary {% if category.name == current_category %}active{% endif %}"
-        href="{% url 'all_products' %}?category={{ category.name }}{% if search_term %}&q={{ search_term }}{% endif %}"
-    >
-        {{ category.friendly_name }}
-    </a>
+    class="btn btn-outline-primary {% if category.name == current_category %}active{% endif %}"
+    href="{% url 'all_products' %}?category={{ category.name }}{% if search_term %}&q={{ search_term }}{% endif %}"
+    {% if category.name == current_category %}aria-current="page"{% endif %}
+>
+    {{ category.friendly_name }}
+</a>
 {% endfor %}
 
 </div>
@@ -84,6 +86,9 @@
     <a
         class="btn btn-outline-primary {% if current_sort == 'name' and current_direction == 'asc' %}active{% endif %}"
         href="{% url 'all_products' %}?sort=name&direction=asc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
+        {% if current_sort == 'name' and current_direction == 'asc' %}
+            aria-current="page"
+        {% endif %}
     >
         Name: A–Z
     </a>
@@ -91,6 +96,9 @@
     <a
         class="btn btn-outline-primary {% if current_sort == 'name' and current_direction == 'desc' %}active{% endif %}"
         href="{% url 'all_products' %}?sort=name&direction=desc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
+        {% if current_sort == 'name' and current_direction == 'desc' %}
+            aria-current="page"
+        {% endif %}
     >
         Name: Z–A
     </a>
@@ -98,6 +106,9 @@
     <a
         class="btn btn-outline-primary {% if current_sort == 'price' and current_direction == 'asc' %}active{% endif %}"
         href="{% url 'all_products' %}?sort=price&direction=asc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
+        {% if current_sort == 'price' and current_direction == 'asc' %}
+            aria-current="page"
+        {% endif %}
     >
         Price: Low to High
     </a>
@@ -105,6 +116,9 @@
     <a
         class="btn btn-outline-primary {% if current_sort == 'price' and current_direction == 'desc' %}active{% endif %}"
         href="{% url 'all_products' %}?sort=price&direction=desc{% if current_category %}&category={{ current_category }}{% endif %}{% if search_term %}&q={{ search_term }}{% endif %}"
+        {% if current_sort == 'price' and current_direction == 'desc' %}
+            aria-current="page"
+        {% endif %}
     >
         Price: High to Low
     </a>
@@ -119,15 +133,21 @@
 
             <div class="card h-100">
 
-                {% if product.image %}
-                    <img
-                        src="{{ product.image.url }}"
-                        class="card-img-top"
-                        alt="{{ product.name }}"
-                    >
-                {% endif %}
+                {% load static %}
 
-                <div class="card-body">
+    {% if product.image %}
+    <img
+        class="img-fluid"
+        src="{{ product.image.url }}"
+        alt="{{ product.name }}">
+    {% else %}
+    <img
+        class="img-fluid"
+        src="{% static 'images/no-image.jpg' %}"
+        alt="No image available">
+    {% endif %}
+
+                <div class="card-body d-flex flex-column">
 
                     <h2 class="card-title h5">
                         <a href="{% url 'product_detail' product.id %}">
@@ -147,17 +167,24 @@
                         £{{ product.price }}
                     </p>
 
-                    <p class="card-text text-muted">
-                        {% if product.stock_quantity > 0 %}
-                            In Stock
-                        {% else %}
-                            Out of Stock
-                        {% endif %}
-                    </p>
+                    {% if product.stock_quantity > 0 %}
+                        <p class="card-text text-success fw-bold">
+                            In stock
+                        </p>
+                    {% else %}
+                        <p class="card-text text-danger fw-bold">
+                            Out of stock
+                        </p>
+                    {% endif %}
 
-                    <p class="card-text text-muted  ">
+
+                    <p class="card-text text-muted">
                         {{ product.description|truncatechars:100 }}
                     </p>
+
+                    <a class="btn btn-primary mt-auto" href="{% url 'product_detail' product.id %}">
+                        View product
+                    </a>
 
                 </div>
 
@@ -170,9 +197,41 @@
         <div class="col-12">
 
             {% if search_term or current_category %}
-                <p>No products matched your search or filters.</p>
-            {% else %}
-                <p>There are no products available at this moment. Check back soon.</p>
+
+    <div class="alert alert-warning">
+
+        <h3>No products found</h3>
+
+        <p>
+            We couldn't find any products matching your search or filters.
+        </p>
+
+        <a
+            class="btn btn-primary"
+            href="{% url 'all_products' %}"
+        >
+            Clear search and filters
+        </a>
+
+    </div>
+
+           {% else %}
+
+               <div class="alert alert-info">
+
+                <p>
+                     There are currently no products available.
+                </p>
+
+               </div>
+
+            {% endif %}  
+
+            {% if search_term %}
+                <p class="mb-4" aria-live="polite">
+                    Showing results for:
+                <strong>{{ search_term }}</strong>
+                </p>
             {% endif %}
 
         </div>

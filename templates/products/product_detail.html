@@ -2,47 +2,74 @@
 
 {% block content %}
 
-    <div class="row">
-        
-    </div>
-
-    <h1>{{ product.name }}</h1>
+<div class="row">
+  <div class="col-12 col-lg-4">
+    {% load static %}
 
     {% if product.image %}
-        <img
-            src="{{ product.image.url }}"
-            alt="{{ product.name }}"
-        >
+    <img
+        class="img-fluid"
+        src="{{ product.image.url }}"
+        alt="{{ product.name }}">
+    {% else %}
+    <img
+        class="img-fluid"
+        src="{% static 'images/no-image.jpg' %}"
+        alt="No image available"
+    >
     {% endif %}
+    
+  </div>
 
-    <h2>Price</h2>
-    <p>£{{ product.price }}</p>
+  <div class="col-12 col-lg-8">
+    <h1>{{ product.name }}</h1>
+
+    <p class="fs-3 fw-bold mb-3">£{{ product.price }}</p>
 
     {% if product.description %}
-        <h2>Description</h2>
-        <p>{{ product.description }}</p>
+    <p class="text-muted mt-2 mb-4"><strong>Description:</strong>
+        {{ product.description }}
+    </p>
     {% endif %}
 
-    <h2>Brand</h2>
-    <p>{{ product.brand }}</p>
+    <p class="text-muted mb-1">
+      <strong>Brand:</strong>
+      {{ product.brand }}
+    </p>
 
-    <h2>Category</h2>
-    <p>{{ product.category }}</p>
+    <p class="text-muted mb-1">
+      <strong>Category:</strong>
+      {{ product.category }}
+    </p>
 
     {% if product.materials %}
-        <h2>Materials</h2>
-        <p>{{ product.materials }}</p>
+    <p class="text-muted mb-1"><strong>Materials:</strong>
+        {{ product.materials }}
+    </p>
     {% endif %}
 
-    <h2>Measurements/Quantity</h2>
-    <p>{{ product.size_or_quantity }}</p>
+    {% if product.size_or_quantity %}
+    <p class="text-muted mb-1"><strong>Size/Quantity:</strong>
+        {{ product.size_or_quantity }}
+    </p>
+    {% endif %}    
 
-    <h2>Stock</h2>
-    <p>{{ product.stock_quantity }}</p>
+    {% if product.stock_quantity == 0 %}
+    <p class="text-danger fw-bold">Out of stock</p>
+    {% elif product.stock_quantity <= 5 %}
+    <p class="text-warning fw-bold">
+      Low stock — only {{ product.stock_quantity }} left
+    </p>
+    {% else %}
+    <p class="text-success fw-bold">In stock</p>
+    {% endif %}
 
     {% if product.ingredients %}
-        <h2>Ingredients</h2>
-        <p>{{ product.ingredients }}</p>
+    <p class="text-muted mb-1"><strong>Ingredients:</strong>
+        {{ product.ingredients }}
+    </p>
     {% endif %}
+  </div>
+</div>
 
 {% endblock %}
