@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login
-from .forms import UserRegisterForm
+from .forms import userRegisterForm
 
 # Create your views here.
 
 def register(request):
     if request.method == "POST":
-       form = UserRegisterForm(request.POST)
+       form = userRegisterForm(request.POST)
        if form.is_valid():
            user = form.save()
            login(request, user)
@@ -21,7 +21,7 @@ def register(request):
 
     else:
 
-        form = UserRegisterForm()
+        form = userRegisterForm()
 
     context = {
         "form": form,
