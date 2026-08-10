@@ -6,30 +6,28 @@ from .forms import userRegisterForm
 # Create your views here.
 
 def register(request):
-
-    def register(request):
-        if request.user.is_authenticated:
-            messages.info(
-                request,
-                "You are already logged in.",
-            )
+    if request.user.is_authenticated:
+        messages.info(
+            request,
+            "You are already logged in.",
+        )
         return redirect("home")
 
     if request.method == "POST":
-       form = userRegisterForm(request.POST)
-       if form.is_valid():
-           user = form.save()
-           login(request, user)
+        form = userRegisterForm(request.POST)
 
-           messages.success(
-               request,
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+
+            messages.success(
+                request,
                 "Welcome to Planet Nutrition! Your account has been created successfully.",
             )
 
-           return redirect("home")
+            return redirect("home")
 
     else:
-
         form = userRegisterForm()
 
     context = {
@@ -37,7 +35,7 @@ def register(request):
     }
 
     return render(
-    request,
-    "registration/register.html",
-    context,
-)
+        request,
+        "registration/register.html",
+        context,
+    )
