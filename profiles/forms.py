@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from .models import UserProfile
 
 class userRegisterForm (UserCreationForm):
     email = forms.EmailField(required=True)
@@ -18,3 +19,16 @@ class userRegisterForm (UserCreationForm):
             "password1",
             "password2",
         ]
+
+class UserProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = (
+            "phone_number",
+            "address_line_1",
+            "address_line_2",
+            "town_or_city",
+            "postcode",
+            "country",
+        )
