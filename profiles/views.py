@@ -6,6 +6,15 @@ from .forms import userRegisterForm
 # Create your views here.
 
 def register(request):
+
+    def register(request):
+        if request.user.is_authenticated:
+            messages.info(
+                request,
+                "You are already logged in.",
+            )
+        return redirect("home")
+
     if request.method == "POST":
        form = userRegisterForm(request.POST)
        if form.is_valid():
