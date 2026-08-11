@@ -1,8 +1,11 @@
 from django.contrib import messages
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib.auth.decorators import user_passes_test
+
 
 from .models import Product, Category
+from .forms import ProductForm
 
 
 def all_products(request):
@@ -83,5 +86,41 @@ def product_detail(request, product_id):
     return render(
         request,
         "products/product_detail.html",
+        context,
+    )
+
+
+@user_passes_test(lambda user: user.is_staff)
+def add_product(request):
+
+    if request.method == "POST":
+        form = ProductForm(
+            request.POST,
+            request.FILES,
+        )
+
+        if form.is_valid():
+            product = form.save()
+
+            messages.success(
+                request,
+                "Successfully added product.",
+            )
+
+            return redirect(
+                "product_detail",
+                product_id=product.id,
+            )
+
+    else:
+        form = ProductForm()
+
+    context = {
+        "form": form,
+    }
+
+    return render(
+        request,
+        "products/add_product.html",
         context,
     )
