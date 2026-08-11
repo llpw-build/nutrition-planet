@@ -55,15 +55,15 @@ def profile(request):
             instance=profile,
         )
 
-    if form.is_valid():
-            form.save()
+        if form.is_valid():
+                form.save()
     
-            messages.success(
-                request,
-                "Your profile has been updated successfully.",
-            )
+                messages.success(
+                    request,
+                    "Your profile has been updated successfully.",
+                )
     
-            return redirect("profile")
+                return redirect("profile")
 
     else:
         form = UserProfileForm(

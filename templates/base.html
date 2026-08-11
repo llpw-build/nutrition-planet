@@ -71,14 +71,6 @@
                 href="#"
                 aria-disabled="true"
               >
-                Account
-              </a>
-
-              <a
-                class="nav-link disabled"
-                href="#"
-                aria-disabled="true"
-              >
                 Bag
               </a>
 
@@ -86,6 +78,10 @@
 
               <form method="POST" action="{% url 'logout' %}">
                   {% csrf_token %}
+              
+              <a class="nav-link" href="{% url 'profile' %}">
+                Account
+              </a>
 
               <button type="submit" class="nav-link btn btn-link">
               Logout
