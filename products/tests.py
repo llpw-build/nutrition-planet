@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse 
 from .models import Product, Brand, Category
+from django.contrib.auth import get_user_model
 
 # Create your tests here.
 
@@ -155,3 +156,51 @@ class ProductTests(TestCase):
             response.status_code,
             404,
         )
+
+class ProductCreateTests(TestCase):
+
+    def test_staff_user_can_access_add_product(self):
+        User = get_user_model()
+
+        user = User.objects.create_user(
+            username="staffuser",
+            password="testpass123",
+            is_staff=True,
+        )
+
+        self.client.login(
+            username="staffuser",
+            password="testpass123",
+        )
+
+        response = self.client.get(
+            reverse("add_product")
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+    def test_not_staff_user_can_access_add_product(self):
+            User = get_user_model()
+    
+            user = User.objects.create_user(
+                username="staffuser",
+                password="testpass123",
+                is_staff=False,
+            )
+    
+            self.client.login(
+                username="staffuser",
+                password="testpass123",
+            )
+    
+            response = self.client.get(
+                reverse("add_product")
+            )
+    
+            self.assertEqual(
+                response.status_code,
+                302,
+            )
