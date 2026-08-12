@@ -18,5 +18,11 @@ urlpatterns = [
     "add/",
     views.add_product,
     name="add_product",
-)
+    ),
+
+   path(
+       "<int:product_id>/edit/",
+       views.edit_product,
+       name="edit_product"
+   )
 ]

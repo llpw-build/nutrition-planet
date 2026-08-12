@@ -124,3 +124,46 @@ def add_product(request):
         "products/add_product.html",
         context,
     )
+
+@user_passes_test(lambda user: user.is_staff)
+def edit_product(request, product_id):
+    product = get_object_or_404(
+        Product,
+        id=product_id,
+    )
+
+    if request.method == "POST":
+        form = ProductForm(
+            request.POST,
+            request.FILES,
+            instance=product,
+        )
+
+        if form.is_valid():
+            form.save()
+
+            messages.success(
+                request,
+                "Product updated successfully.",
+            )
+
+            return redirect(
+                "product_detail",
+                product_id=product.id,
+            )
+
+    else:
+        form = ProductForm(
+            instance=product,
+        )
+
+    context = {
+        "form": form,
+        "product": product,
+    }
+
+    return render(
+        request,
+        "products/edit_product.html",
+        context,
+    )
