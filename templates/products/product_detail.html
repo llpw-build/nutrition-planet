@@ -3,33 +3,38 @@
 {% block content %}
 
 <div class="row">
+
   <div class="col-12 col-lg-4">
     {% load static %}
 
     {% if product.image %}
-    <img
+      <img
         class="img-fluid"
         src="{{ product.image.url }}"
-        alt="{{ product.name }}">
+        alt="{{ product.name }}"
+      >
     {% else %}
-    <img
+      <img
         class="img-fluid"
         src="{% static 'images/no-image.jpg' %}"
         alt="No image available"
-    >
+      >
     {% endif %}
-    
   </div>
 
   <div class="col-12 col-lg-8">
+
     <h1>{{ product.name }}</h1>
 
-    <p class="fs-3 fw-bold mb-3">£{{ product.price }}</p>
+    <p class="fs-3 fw-bold mb-3">
+      £{{ product.price }}
+    </p>
 
     {% if product.description %}
-    <p class="text-muted mt-2 mb-4"><strong>Description:</strong>
+      <p class="text-muted mt-2 mb-4">
+        <strong>Description:</strong>
         {{ product.description }}
-    </p>
+      </p>
     {% endif %}
 
     <p class="text-muted mb-1">
@@ -43,33 +48,75 @@
     </p>
 
     {% if product.materials %}
-    <p class="text-muted mb-1"><strong>Materials:</strong>
+      <p class="text-muted mb-1">
+        <strong>Materials:</strong>
         {{ product.materials }}
-    </p>
+      </p>
     {% endif %}
 
     {% if product.size_or_quantity %}
-    <p class="text-muted mb-1"><strong>Size/Quantity:</strong>
+      <p class="text-muted mb-1">
+        <strong>Size/Quantity:</strong>
         {{ product.size_or_quantity }}
-    </p>
-    {% endif %}    
+      </p>
+    {% endif %}
 
     {% if product.stock_quantity == 0 %}
-    <p class="text-danger fw-bold">Out of stock</p>
+      <p class="text-danger fw-bold">
+        Out of stock
+      </p>
+
     {% elif product.stock_quantity <= 5 %}
-    <p class="text-warning fw-bold">
-      Low stock — only {{ product.stock_quantity }} left
-    </p>
+      <p class="text-warning fw-bold">
+        Low stock — only {{ product.stock_quantity }} left
+      </p>
+
     {% else %}
-    <p class="text-success fw-bold">In stock</p>
+      <p class="text-success fw-bold">
+        In stock
+      </p>
     {% endif %}
 
     {% if product.ingredients %}
-    <p class="text-muted mb-1"><strong>Ingredients:</strong>
+      <p class="text-muted mb-1">
+        <strong>Ingredients:</strong>
         {{ product.ingredients }}
-    </p>
+      </p>
     {% endif %}
+
+    <form
+      method="POST"
+      action="{% url 'add_to_bag' product.id %}"
+      class="mt-4"
+    >
+      {% csrf_token %}
+
+      <label
+        for="quantity"
+        class="form-label"
+      >
+        Quantity
+      </label>
+
+      <input
+        id="quantity"
+        type="number"
+        name="quantity"
+        value="1"
+        min="1"
+        class="form-control mb-3"
+      >
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+      >
+        Add to Bag
+      </button>
+    </form>
+
   </div>
+
 </div>
 
 {% endblock %}
