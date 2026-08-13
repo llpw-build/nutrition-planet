@@ -204,3 +204,99 @@ class ProductCreateTests(TestCase):
                 response.status_code,
                 302,
             )
+
+class ProductUpdateDeleteTests(TestCase):
+
+    def setUp(self):
+        self.brand = Brand.objects.create(
+            slug="test-brand",
+            name="Test Brand",
+        )
+
+        self.category = Category.objects.create(
+            name="test-category",
+            friendly_name="Test Category",
+        )
+
+        self.product = Product.objects.create(
+            name="Delete Test Product",
+            brand=self.brand,
+            category=self.category,
+            price="9.99",
+            size_or_quantity="1 item",
+            stock_quantity=5,
+            image="products/images/test.jpg",
+            is_active=True,
+        )
+
+        User = get_user_model()
+
+        self.staff_user = User.objects.create_user(
+            username="staffuser",
+            password="testpass123",
+            is_staff=True,
+        )
+
+
+    def test_staff_can_delete_product(self):
+        self.client.login(
+            username="staffuser",
+            password="testpass123",
+    )
+
+        self.client.post(
+            reverse(
+                "delete_product",
+                 args=[self.product.id],
+        )
+    )
+
+        self.assertFalse(
+            Product.objects.filter(
+                id=self.product.id
+            ).exists()
+    )
+
+    def test_staff_user_can_access_edit_product(self):
+        self.client.login(
+            username="staffuser",
+            password="testpass123",
+        )
+
+        response = self.client.get(
+            reverse(
+                "edit_product",
+                args=[self.product.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+    def test_non_staff_user_cannot_access_edit_product(self):
+        User = get_user_model()
+
+        User.objects.create_user(
+            username="normaluser",
+            password="testpass123",
+            is_staff=False,
+        )
+
+        self.client.login(
+            username="normaluser",
+            password="testpass123",
+        )
+
+        response = self.client.get(
+            reverse(
+                "edit_product",
+                args=[self.product.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            302,
+        )

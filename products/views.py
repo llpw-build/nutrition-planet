@@ -167,3 +167,30 @@ def edit_product(request, product_id):
         "products/edit_product.html",
         context,
     )
+
+@user_passes_test(lambda user: user.is_staff)
+def delete_product(request, product_id):
+    product = get_object_or_404(
+        Product,
+        id=product_id,
+    )
+
+    if request.method == "POST":
+        product.delete()
+
+        messages.success(
+            request,
+            "Product deleted successfully.",
+        )
+
+        return redirect("all_products")
+
+    context = {
+        "product": product,
+    }
+
+    return render(
+        request,
+        "products/delete_product.html",
+        context,
+    )
