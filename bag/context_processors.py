@@ -1,3 +1,6 @@
+from products.models import Product
+from django.shortcuts import get_object_or_404
+
 def bag_contents(request):
     bag = request.session.get("bag", {})
 

@@ -30,5 +30,5 @@ urlpatterns = [
     "<int:product_id>/delete/",
     views.delete_product,
     name="delete_product",
-)
+),
 ]

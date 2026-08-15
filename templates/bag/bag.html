@@ -1,0 +1,51 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container py-5">
+  <h1>Your Bag</h1>
+
+  {% if bag_items %} {% for item in bag_items %}
+
+  <div class="mb-4">
+    <h2>{{ item.product.name }}</h2>
+
+    <p>Price: £{{ item.product.price }}</p>
+
+    <form method="POST" action="{% url 'update_bag' item.product.id %}">
+      {% csrf_token %}
+
+      <label for="quantity-{{ item.product.id }}"> Quantity </label>
+
+      <input
+        id="quantity-{{ item.product.id }}"
+        type="number"
+        name="quantity"
+        value="{{ item.quantity }}"
+        min="1"
+      />
+
+      <button type="submit" class="btn btn-secondary">Update</button>
+    </form>
+
+    <form method="POST" action="{% url 'remove_from_bag' item.product.id %}">
+      {% csrf_token %}
+
+      <button type="submit" class="btn btn-danger mt-2">Remove</button>
+    </form>
+
+    <p>Line total: £{{ item.line_total }}</p>
+  </div>
+
+  {% endfor %}
+
+  <hr />
+
+  <h3>Total: £{{ total }}</h3>
+
+  {% else %}
+
+  <p>Your bag is empty.</p>
+
+  {% endif %}
+</div>
+
+{% endblock %}
