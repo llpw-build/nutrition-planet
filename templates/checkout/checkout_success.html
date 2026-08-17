@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for item in order.lineitems.all %}
+
+    <p>
+        {{ item.product }}
+        × {{ item.quantity }}
+        = £{{ item.lineitem_total }}
+    </p>
+
+{% endfor %}
+
+£{{ order.order_total }}
+
+{% endblock %}

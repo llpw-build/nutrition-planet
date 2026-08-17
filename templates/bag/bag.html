@@ -41,6 +41,13 @@
 
   <h3>Total: £{{ total }}</h3>
 
+  <a
+    href="{% url 'checkout' %}"
+    class="btn btn-success"
+  >
+     Proceed to Checkout
+  </a>
+
   {% else %}
 
   <p>Your bag is empty.</p>

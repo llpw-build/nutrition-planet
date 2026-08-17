@@ -41,6 +41,14 @@ class Order(models.Model):
     default=0,
    )
 
+    def update_total(self):
+        self.order_total = sum(
+            item.lineitem_total
+            for item in self.lineitems.all()
+        )
+
+        self.save()
+
     def __str__(self):
         return f"Order {self.id} - {self.full_name}"
 
@@ -58,10 +66,35 @@ class OrderLineItem(models.Model):
         related_name="order_line_items",
     )
 
+    quantity = models.PositiveIntegerField(
+        default=1,
+    )
+
+    lineitem_total = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+    )
+
+    def save(self, *args, **kwargs):
+        self.lineitem_total = (
+            self.product.price * self.quantity
+        )
+
+        super().save(*args, **kwargs)
+
+        self.order.update_total()
+
+    def delete(self, *args, **kwargs):
+        order = self.order
+
+        super().delete(*args, **kwargs)
+
+        order.update_total()
+
     def __str__(self):
         return (
             f"{self.quantity} x {self.product.name} "
             f"on order {self.order.id}"
-    )
-
+        )
     
