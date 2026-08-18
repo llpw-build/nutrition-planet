@@ -39,7 +39,17 @@ class Order(models.Model):
     max_digits=10,
     decimal_places=2,
     default=0,
-   )
+    )
+
+    payment_status = models.CharField(
+    max_length=10,
+    default="pending",
+    )
+
+    stripe_payment_intent_id = models.CharField(
+    max_length=255,
+    blank=True,
+    )
 
     def update_total(self):
         self.order_total = sum(
