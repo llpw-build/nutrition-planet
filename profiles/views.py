@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login
 from .forms import userRegisterForm
-from.forms import UserProfileForm
+from .forms import UserProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -49,6 +49,8 @@ def register(request):
 def profile(request):
     profile = request.user.user_profile
 
+    orders = profile.orders.all().order_by("-date")
+
     if request.method == "POST":
         form = UserProfileForm(
             request.POST,
@@ -72,6 +74,7 @@ def profile(request):
 
     context = {
         "form": form,
+        "orders": orders,
     }
 
     return render(

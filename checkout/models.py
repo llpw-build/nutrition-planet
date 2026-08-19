@@ -1,5 +1,6 @@
 from django.db import models
 from products.models import Product
+from profiles.models import UserProfile
 # Create your models here.
 class Order(models.Model):
 
@@ -45,6 +46,15 @@ class Order(models.Model):
     max_length=10,
     default="pending",
     )
+
+    profile = models.ForeignKey(
+    UserProfile,
+    on_delete=models.SET_NULL,
+    null=True,
+    blank=True,
+    related_name="orders",
+    )
+
 
     stripe_payment_intent_id = models.CharField(
     max_length=255,

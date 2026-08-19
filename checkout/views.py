@@ -47,6 +47,9 @@ def checkout(request):
                 payment_intent_id
             )
 
+            if request.user.is_authenticated:
+                order.profile = request.user.user_profile
+
             order.save()
 
             stripe.PaymentIntent.modify(
