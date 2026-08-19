@@ -49,6 +49,8 @@ class Order(models.Model):
     stripe_payment_intent_id = models.CharField(
     max_length=255,
     blank=True,
+    null=True,
+    unique=True,
     )
 
     def update_total(self):
