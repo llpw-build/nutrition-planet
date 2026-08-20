@@ -2,10 +2,8 @@ from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import user_passes_test
-
-
-from .models import Product, Category
-from .forms import ProductForm
+from .models import Product, Category, Review
+from .forms import ProductForm, ReviewForm
 
 
 def all_products(request):
@@ -79,8 +77,38 @@ def product_detail(request, product_id):
         is_active=True,
     )
 
+    reviews = product.reviews.all().order_by(
+    "-created_at"
+    )
+
+    if request.method == "POST":
+
+        if not request.user.is_authenticated:
+            return redirect("login")
+
+        form = ReviewForm(request.POST)
+
+        if form.is_valid():
+            review = form.save(
+                commit=False,
+            )
+
+            review.product = product
+            review.user = request.user
+            review.save()
+
+            return redirect(
+                "product_detail",
+                product_id=product.id,
+            )
+
+    else:
+        form = ReviewForm()
+
     context = {
         "product": product,
+        "form": form,
+        "reviews": reviews,
     }
 
     return render(
