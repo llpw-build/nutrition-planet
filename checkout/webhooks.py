@@ -36,8 +36,19 @@ def stripe_webhook(request):
         except Order.DoesNotExist:
             return HttpResponse(status=200)
 
-        order.payment_status = "paid"
-        order.save()
+        if order.payment_status != "paid":
+
+            for lineitem in order.lineitems.all():
+                product = lineitem.product
+
+                product.stock_quantity = (
+                    product.stock_quantity - lineitem.quantity
+                )
+
+                product.save()
+
+            order.payment_status = "paid"
+            order.save()
 
     elif event_type == "payment_intent.payment_failed":
         payment_intent = event["data"]["object"]
