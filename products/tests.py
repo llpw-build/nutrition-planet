@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse 
-from .models import Product, Brand, Category
+from .models import Product, Brand, Category, Review
 from django.contrib.auth import get_user_model
 
 # Create your tests here.
@@ -299,4 +299,128 @@ class ProductUpdateDeleteTests(TestCase):
         self.assertEqual(
             response.status_code,
             302,
+        )
+
+class ReviewTests(TestCase):
+
+    def setUp(self):
+
+        self.brand = Brand.objects.create(
+            slug="test-brand",
+            name="Test Brand",
+        )
+
+        self.category = Category.objects.create(
+            name="test-category",
+            friendly_name="Test Category",
+        )
+
+        self.product = Product.objects.create(
+            name="Review Test Product",
+            brand=self.brand,
+            category=self.category,
+            price="19.99",
+            size_or_quantity="1 item",
+            stock_quantity=10,
+            image="products/images/test.jpg",
+            is_active=True,
+        )
+
+        User = get_user_model()
+
+        self.user = User.objects.create_user(
+            username="reviewuser",
+            password="testpass123",
+        )
+
+    def test_logged_in_user_can_submit_review(self):
+
+        self.client.login(
+            username="reviewuser",
+            password="testpass123",
+        )
+
+        response = self.client.post(
+            reverse(
+                "product_detail",
+                args=[self.product.id],
+            ),
+            {
+            "rating": 5,
+            "comment": "Excellent product.",
+            },
+        )
+
+        self.assertEqual(
+            response.status_code,
+            302,
+        )
+
+        self.assertTrue(
+            Review.objects.filter(
+                product=self.product,
+                user=self.user,
+                rating=5,
+                comment="Excellent product.",
+            ).exists()
+        )
+
+    def test_logged_out_user_cannot_submit_review(self):
+
+        response = self.client.post(
+            reverse(
+                "product_detail",
+                args=[self.product.id],
+        ),
+            {
+                "rating": 5,
+                "comment": "I should not be allowed to post this.",
+            },
+    )
+
+        self.assertEqual(
+            response.status_code,
+            302,
+        )
+
+        self.assertFalse(
+            Review.objects.filter(
+                product=self.product,
+                comment="I should not be allowed to post this.",
+            ).exists()
+        )
+
+    def test_reviews_are_ordered_newest_first(self):
+
+        first_review = Review.objects.create(
+            product=self.product,
+            user=self.user,
+            rating=4,
+            comment="First review.",
+        )
+
+        second_review = Review.objects.create(
+            product=self.product,
+            user=self.user,
+            rating=5,
+            comment="Second review.",
+        )
+
+        response = self.client.get(
+            reverse(
+                "product_detail",
+                args=[self.product.id],
+            )
+        )
+
+        reviews = response.context["reviews"]
+
+        self.assertEqual(
+            reviews[0],
+            second_review,
+        )
+
+        self.assertEqual(
+            reviews[1],
+            first_review,
         )

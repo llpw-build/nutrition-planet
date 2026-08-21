@@ -78,8 +78,10 @@ def product_detail(request, product_id):
     )
 
     reviews = product.reviews.all().order_by(
-    "-date"
+    "-date",
+    "-id",
 )
+
 
     if request.method == "POST":
 

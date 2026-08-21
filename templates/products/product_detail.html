@@ -121,7 +121,7 @@
 
     <h2>Customer Reviews</h2>
 
-    {% for review in product.reviews.all %}
+    {% for review in reviews %}
 
         <div class="card mb-3">
             <div class="card-body">
@@ -141,7 +141,7 @@
                 </p>
 
                 <small class="text-muted">
-                    {{ review.created_at|date:"d M Y" }}
+                    {{ review.date|date:"d M Y" }}
                 </small>
 
             </div>
@@ -167,7 +167,7 @@
 
             {% csrf_token %}
 
-            {{ review_form.as_p }}
+            {{ form.as_p }}
 
             <button
                 type="submit"

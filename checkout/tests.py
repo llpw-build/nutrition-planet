@@ -2,6 +2,8 @@ from django.test import TestCase
 from django.urls import reverse
 from products.models import Brand, Category, Product
 from .models import Order, OrderLineItem
+from unittest.mock import patch
+
 
 # Create your tests here.
 
@@ -35,7 +37,9 @@ class CheckoutTests(TestCase):
         }
         session.save()
 
-    def test_checkout_creates_order(self):
+
+    @patch("checkout.views.stripe.PaymentIntent.modify")
+    def test_checkout_creates_order(self, mock_modify):
 
         self.client.post(
             reverse("checkout"),
@@ -47,6 +51,7 @@ class CheckoutTests(TestCase):
                 "town_or_city": "Newport",
                 "postcode": "NP20 1AA",
                 "country": "United Kingdom",
+                "payment_intent_id": "pi_test_123",
             },
         )
 
@@ -56,7 +61,8 @@ class CheckoutTests(TestCase):
         )
 
 
-    def test_checkout_creates_order_line_item(self):
+    @patch("checkout.views.stripe.PaymentIntent.modify")
+    def test_checkout_creates_order_line_item(self, mock_modify):
 
         self.client.post(
             reverse("checkout"),
@@ -68,6 +74,7 @@ class CheckoutTests(TestCase):
                 "town_or_city": "Newport",
                 "postcode": "NP20 1AA",
                 "country": "United Kingdom",
+                "payment_intent_id": "pi_test_123",
             },
         )
 
@@ -83,9 +90,11 @@ class CheckoutTests(TestCase):
             2,
         )
 
-    def test_checkout_clears_bag(self):
 
-        self.client.post(
+    @patch("checkout.views.stripe.PaymentIntent.modify")
+    def test_checkout_success_clears_bag(self, mock_modify):
+
+        response = self.client.post(
             reverse("checkout"),
             {
                 "full_name": "Test User",
@@ -95,7 +104,17 @@ class CheckoutTests(TestCase):
                 "town_or_city": "Newport",
                 "postcode": "NP20 1AA",
                 "country": "United Kingdom",
+                "payment_intent_id": "pi_test_123",
             },
+        )
+
+        order_id = response.json()["order_id"]
+
+        self.client.get(
+            reverse(
+                "checkout_success",
+                args=[order_id],
+            )
         )
 
         session = self.client.session
