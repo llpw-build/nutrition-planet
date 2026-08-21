@@ -69,3 +69,20 @@ Basic review capability has been added to the website in order for users to be a
 ### Product Cards
 
 ### Within the Product Catalogue, I used bootstrap to create product cards for a clean view of a selection of products that is responsive depending on what screen size the website is being viewed on.
+
+### Mobile and tablet responsiveness
+
+### Depending on whether the user is viewing the project on either a mobile or tablet, the website adjusts its contents to be able to still be viewied in an appealing manner with a clean user interface.
+
+### Technologies used
+
+
+### HTML
+### CSS
+### Django
+### Python 
+### Javascript
+### Bootstrap
+### SQLite
+### Stripe
+### Github
