@@ -107,25 +107,25 @@ class Review(models.Model):
     ]
 
     product = models.ForeignKey(
-    Product,
-    on_delete=models.CASCADE,
-    related_name="reviews",
+        Product,
+        on_delete=models.CASCADE,
+        related_name="reviews",
     )
 
-    product = models.ForeignKey(
-    Product,
-    on_delete=models.CASCADE,
-    related_name="reviews",
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="reviews",
     )
 
     comment = models.TextField()
 
     rating = models.IntegerField(
-    choices=RATING_CHOICES,
+        choices=RATING_CHOICES,
     )
 
     date = models.DateTimeField(
-    auto_now_add=True,
+        auto_now_add=True,
     )
 
     def __str__(self):

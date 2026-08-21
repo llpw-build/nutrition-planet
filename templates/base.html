@@ -3,8 +3,8 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Planet Nutrition</title>
 
@@ -13,27 +13,16 @@
       rel="stylesheet"
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
-    >
+    />
 
-    <link
-      rel="stylesheet"
-      href="{% static 'css/style.css' %}"
-    >
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   </head>
 
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <header>
-      <nav
-        class="navbar navbar-expand-lg bg-dark"
-        data-bs-theme="dark"
-      >
+      <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container">
-          <a
-            class="navbar-brand"
-            href="{% url 'home' %}"
-          >
-            Planet Nutrition
-          </a>
+          <a class="navbar-brand" href="{% url 'home' %}"> Planet Nutrition </a>
 
           <button
             class="navbar-toggler"
@@ -47,54 +36,40 @@
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <div
-            class="collapse navbar-collapse"
-            id="mainNavbar"
-          >
+          <div class="collapse navbar-collapse" id="mainNavbar">
             <div class="navbar-nav">
-              <a
-                class="nav-link"
-                href="{% url 'home' %}"
-              >
-                Home
-              </a>
+              <a class="nav-link" href="{% url 'home' %}"> Home </a>
 
-              <a
-                class="nav-link"
-                href="{% url 'all_products' %}"
-              >
-                Products
-              </a>
+              <a class="nav-link" href="{% url 'all_products' %}"> Products </a>
 
-              <a
-                class="nav-link"
-                href="{% url 'view_bag' %}"
-              >
+              <a class="nav-link" href="{% url 'view_bag' %}">
                 Bag ({{ bag_count }})
               </a>
 
               {% if user.is_authenticated %}
 
-              <form method="POST" action="{% url 'logout' %}">
-                  {% csrf_token %}
-              
-              <a class="nav-link" href="{% url 'profile' %}">
-                Account
-              </a>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' %}"> Account </a>
+              </li>
 
-              <button type="submit" class="nav-link btn btn-link">
-              Logout
-              </button>
-              </form>
+              <li class="nav-item">
+                <form
+                  method="POST"
+                  action="{% url 'logout' %}"
+                  class="d-inline"
+                >
+                  {% csrf_token %}
+
+                  <button type="submit" class="nav-link btn btn-link border-0">
+                    Logout
+                  </button>
+                </form>
+              </li>
 
               {% else %}
 
-              <a class="nav-link" href="{% url 'login' %}">
-                Login
-              </a>
-              <a class="nav-link" href="{% url 'register' %}">
-                Register
-              </a>
+              <a class="nav-link" href="{% url 'login' %}"> Login </a>
+              <a class="nav-link" href="{% url 'register' %}"> Register </a>
 
               {% endif %}
             </div>
@@ -103,23 +78,34 @@
       </nav>
     </header>
 
-    <main class="container py-4">
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-{{ message.tags }}" role="alert">
-            {{ message }}
-          </div>
-        {% endfor %}
-      {% endif %}
-
-      {% block content %}
-      {% endblock %}
+    <main class="container py-4 flex-grow-1">
+      {% if messages %} {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}" role="alert">
+        {{ message }}
+      </div>
+      {% endfor %} {% endif %} {% block content %} {% endblock %}
     </main>
 
-    <footer class="bg-dark text-light text-center py-3 mt-5">
-      <p class="mb-0">
-        &copy; 2026 Planet Nutrition
-      </p>
+    <footer class="bg-dark text-light mt-auto py-4">
+      <div class="container">
+        <div class="row align-items-center gy-3">
+          <div class="col-12 col-md-6 text-center text-md-start">
+            <p class="mb-0">&copy; 2026 Planet Nutrition</p>
+          </div>
+
+          <div class="col-12 col-md-6 text-center text-md-end">
+            <a href="#" class="footer-link me-3" aria-label="Instagram">
+              Instagram
+            </a>
+
+            <a href="#" class="footer-link me-3" aria-label="Facebook">
+              Facebook
+            </a>
+
+            <a href="#" class="footer-link" aria-label="TikTok"> TikTok </a>
+          </div>
+        </div>
+      </div>
     </footer>
 
     <script

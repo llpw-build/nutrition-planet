@@ -4,30 +4,148 @@
 
 <div class="container py-5">
 
-    <h1>Checkout</h1>
+    <div class="row justify-content-center">
 
-    <form method="POST" id="payment-form">
-        {% csrf_token %}
+        <div class="col-12 col-md-9 col-lg-7">
 
-        <input
-            type="hidden"
-            name="payment_intent_id"
-            value="{{ payment_intent_id }}"
-        >
+            <h1 class="mb-4">
+                Checkout
+            </h1>
 
-        {{ form.as_p }}
+            <form method="POST" id="payment-form">
 
-        <div id="payment-element"></div>
+                {% csrf_token %}
 
-        <p id="payment-errors"></p>
+                <input
+                    type="hidden"
+                    name="payment_intent_id"
+                    value="{{ payment_intent_id }}"
+                >
 
-        <button
-            type="submit"
-            class="btn btn-primary"
-        >
-            Place Order
-        </button>
-    </form>
+                <div class="mb-3">
+
+                    <label
+                        for="{{ form.full_name.id_for_label }}"
+                        class="form-label"
+                    >
+                        Full name
+                    </label>
+
+                    {{ form.full_name }}
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label
+                        for="{{ form.email.id_for_label }}"
+                        class="form-label"
+                    >
+                        Email
+                    </label>
+
+                    {{ form.email }}
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label
+                        for="{{ form.phone_number.id_for_label }}"
+                        class="form-label"
+                    >
+                        Phone number
+                    </label>
+
+                    {{ form.phone_number }}
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label
+                        for="{{ form.street_address.id_for_label }}"
+                        class="form-label"
+                    >
+                        Street address
+                    </label>
+
+                    {{ form.street_address }}
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label
+                        for="{{ form.town_or_city.id_for_label }}"
+                        class="form-label"
+                    >
+                        Town or city
+                    </label>
+
+                    {{ form.town_or_city }}
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label
+                        for="{{ form.postcode.id_for_label }}"
+                        class="form-label"
+                    >
+                        Postcode
+                    </label>
+
+                    {{ form.postcode }}
+
+                </div>
+
+
+                <div class="mb-4">
+
+                    <label
+                        for="{{ form.country.id_for_label }}"
+                        class="form-label"
+                    >
+                        Country
+                    </label>
+
+                    {{ form.country }}
+
+                </div>
+
+
+                <div
+                    id="payment-element"
+                    class="mb-3"
+                >
+                </div>
+
+
+                <p
+                    id="payment-errors"
+                    class="text-danger"
+                >
+                </p>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Place Order
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
 
 </div>
 
@@ -35,6 +153,7 @@
 <script src="https://js.stripe.com/v3/"></script>
 
 <script>
+
     const stripe = Stripe("{{ stripe_public_key }}");
 
     const elements = stripe.elements({
@@ -51,6 +170,7 @@
 
 
     form.addEventListener("submit", async function(event) {
+
         event.preventDefault();
 
         const formData = new FormData(form);
@@ -59,20 +179,23 @@
             method: "POST",
             body: formData
         });
-            
+
         const data = await response.json();
 
         const result = await stripe.confirmPayment({
             elements: elements,
             confirmParams: {
-            return_url:`${window.location.origin}/checkout/success/${data.order_id}/`
+                return_url:
+                    `${window.location.origin}/checkout/success/${data.order_id}/`
             }
         });
 
         if (result.error) {
             errorContainer.textContent = result.error.message;
         }
+
     });
+
 </script>
 
 {% endblock %}

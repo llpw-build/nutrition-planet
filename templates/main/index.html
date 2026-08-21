@@ -1,15 +1,57 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
 
-<h1>Welcome to Planet Nutrition</h1>
+<section class="text-center py-5">
 
-<p>Supplements and nutrition for all your goals.</p>
+    <img
+        src="{% static 'images/planet-nutrition-logo.png' %}"
+        alt="Planet Nutrition logo"
+        class="img-fluid home-logo mb-4"
+    >
+
+    <h1 class="display-5 fw-bold">
+        Welcome to Planet Nutrition
+    </h1>
+
+    <p class="lead text-muted mb-4">
+        Supplements and nutrition and equipment to take your training out of this world!
+    </p>
+
+    <a
+        class="btn btn-primary btn-lg"
+        href="{% url 'all_products' %}"
+        role="button"
+    >
+        Shop products
+    </a>
+
+</section>
 
 
-<a class="btn btn-primary" href="{% url 'all_products' %}" role="button">
-    Shop products
-</a>
+<section class="py-5 border-top">
 
+    <div class="row justify-content-center">
+
+        <div class="col-12 col-lg-8 text-center">
+
+            <h2 class="fw-bold mb-3">
+                About Us
+            </h2>
+
+            <p class="text-muted mb-0">
+                Planet Nutrition is an online fitness store built to make
+                finding the right products simple, first time. Browse protein, creatine
+                and other nutrition products, fitness equipment and choose
+                supplements that fit your goals.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
 
 {% endblock %}
