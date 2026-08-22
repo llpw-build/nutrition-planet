@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'bag',
     'checkout',
     'profiles',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 
@@ -146,9 +148,8 @@ STORAGES = {
 
     "default": {
         "BACKEND":
-            "django.core.files.storage.FileSystemStorage",
-    },
-    
+            "cloudinary_storage.storage.MediaCloudinaryStorage",    },
+
     "staticfiles": {
         "BACKEND":
             "whitenoise.storage.CompressedStaticFilesStorage",
