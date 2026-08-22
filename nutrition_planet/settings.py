@@ -33,7 +33,13 @@ STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
 
 STRIPE_WH_SECRET = env("STRIPE_WH_SECRET")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list(
+    "ALLOWED_HOSTS",
+    default=[
+        "localhost",
+        "127.0.0.1",
+    ],
+)
 
 
 # Application definition
@@ -55,6 +61,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -88,10 +95,10 @@ WSGI_APPLICATION = 'nutrition_planet.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": env.db(
+        "DATABASE_URL",
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+    )
 }
 
 
@@ -132,6 +139,21 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [ BASE_DIR / "static",]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STORAGES = {
+
+    "default": {
+        "BACKEND":
+            "django.core.files.storage.FileSystemStorage",
+    },
+    
+    "staticfiles": {
+        "BACKEND":
+            "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
