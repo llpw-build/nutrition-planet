@@ -1,0 +1,189 @@
+﻿[
+{
+  "model": "products.brand",
+  "pk": 1,
+  "fields": {
+    "slug": "optimum-nutrition",
+    "name": "Optimum Nutrition",
+    "description": "Optimum Nutrition, your one stop shop for all your nutritional needs.",
+    "logo": "brands/logos/testlogo.jpg",
+    "website": "https://www.optimumnutrition.com/"
+  }
+},
+{
+  "model": "products.brand",
+  "pk": 2,
+  "fields": {
+    "slug": "applied-nutrition",
+    "name": "Applied Nutrtion",
+    "description": "Applied Nutrition develops sports supplements for athletes",
+    "logo": "brands/logos/testlogo_FZA20VK.jpg",
+    "website": "https://appliednutrition.uk/"
+  }
+},
+{
+  "model": "products.brand",
+  "pk": 3,
+  "fields": {
+    "slug": "sport-gear",
+    "name": "Sport Gear",
+    "description": "Sport gear, providing all the sporting equipment you could need!",
+    "logo": "brands/logos/sportgear.png",
+    "website": "https://www.sportsgear.co.uk"
+  }
+},
+{
+  "model": "products.brand",
+  "pk": 4,
+  "fields": {
+    "slug": "one-nutrition",
+    "name": "One Nutrition",
+    "description": "One nutrition has the goal of becoming the number one manufacturer and distributor of both Protein Powder and Creatine in the UK.",
+    "logo": "brands/logos/one-nutrition.png",
+    "website": "https://www.one-nutritions.co.uk"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 1,
+  "fields": {
+    "name": "protein-powder",
+    "friendly_name": "Protein Powder"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 2,
+  "fields": {
+    "name": "creatine",
+    "friendly_name": "Creatine"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 3,
+  "fields": {
+    "name": "accessories",
+    "friendly_name": "Accessories"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 2,
+  "fields": {
+    "name": "15 pound dumbells",
+    "brand": 3,
+    "category": 3,
+    "price": "18.99",
+    "size_or_quantity": "1 set",
+    "materials": "Rubber, stainless steel.",
+    "ingredients": "",
+    "stock_quantity": 2,
+    "description": "15lbs dumbbell weights. Timeless.",
+    "image": "products/images/weights.png",
+    "is_active": true
+  }
+},
+{
+  "model": "products.product",
+  "pk": 3,
+  "fields": {
+    "name": "Peach Creatine powder",
+    "brand": 4,
+    "category": 2,
+    "price": "17.00",
+    "size_or_quantity": "150g",
+    "materials": "",
+    "ingredients": "Creatine monohydrate, citric acid, natural and artificial flavouring (peach), silicon dioxide, sucralose.",
+    "stock_quantity": 13,
+    "description": "Peach Creatine Monohydrate. Chase your dreams, achieve your goals.",
+    "image": "products/images/one-creatine.png",
+    "is_active": true
+  }
+},
+{
+  "model": "products.product",
+  "pk": 4,
+  "fields": {
+    "name": "Creatine Tablets (Strawberry)",
+    "brand": 1,
+    "category": 2,
+    "price": "13.97",
+    "size_or_quantity": "120 tablets",
+    "materials": "",
+    "ingredients": "Creatine Monohydrate\r\nMicrocrystalline Cellulose\r\nMaltodextrin\r\nNatural Strawberry Flavouring\r\nCitric Acid\r\nStearic Acid",
+    "stock_quantity": 0,
+    "description": "Creatine monohydrate tablets in a strawberry flavour.",
+    "image": "products/images/6a43a6eb-c21c-4b50-b105-50a1ea989931.png",
+    "is_active": true
+  }
+},
+{
+  "model": "products.product",
+  "pk": 5,
+  "fields": {
+    "name": "Fruit Punch Creatine Powder",
+    "brand": 3,
+    "category": 2,
+    "price": "20.00",
+    "size_or_quantity": "60 servings",
+    "materials": "",
+    "ingredients": "Creatine Monohydrate\r\nCitric Acid\r\nNatural & Artificial Fruit Punch Flavouring\r\nMalic Acid\r\nSucralose\r\nAcesulfame K\r\nSilicon Dioxide\r\nBeetroot Red (Colour)\r\nBeta-Carotene (Colour)",
+    "stock_quantity": 10,
+    "description": "",
+    "image": "products/images/4d57f79e-634b-434f-84b6-7d0f4fa4bccb.png",
+    "is_active": true
+  }
+},
+{
+  "model": "products.product",
+  "pk": 6,
+  "fields": {
+    "name": "Premium Whey Concentrate",
+    "brand": 4,
+    "category": 1,
+    "price": "34.99",
+    "size_or_quantity": "750g",
+    "materials": "",
+    "ingredients": "Whey Protein Concentrate (Milk)\r\nWhey Protein Isolate (Milk)\r\nNatural Chocolate Flavouring\r\nCocoa Powder (Reduced Fat)\r\nSunflower Lecithin\r\nNatural Vanilla Flavouring\r\nSteviol Glycosides (Stevia)\r\nXanthan Gum\r\nSea Salt",
+    "stock_quantity": 22,
+    "description": "Achieve all of your goals with this new premium protein powder by One Nutrition.",
+    "image": "products/images/dabc2d2e-513a-4c7d-9874-50f1ac157c9f.png",
+    "is_active": true
+  }
+},
+{
+  "model": "products.product",
+  "pk": 7,
+  "fields": {
+    "name": "Vanilla Ice Cream Protein Powder",
+    "brand": 3,
+    "category": 1,
+    "price": "21.00",
+    "size_or_quantity": "750g",
+    "materials": "",
+    "ingredients": "Whey Protein Concentrate (Milk)\r\nWhey Protein Isolate (Milk)\r\nNatural & Artificial Vanilla Flavouring\r\nSunflower Lecithin\r\nXanthan Gum\r\nGuar Gum\r\nSucralose\r\nAcesulfame K\r\nSalt",
+    "stock_quantity": 2,
+    "description": "Vanilla ice cream protein powder by Sports Gear.",
+    "image": "products/images/f9a87fc4-572d-4932-9339-7b1da5d90c4c.png",
+    "is_active": true
+  }
+},
+{
+  "model": "products.product",
+  "pk": 8,
+  "fields": {
+    "name": "Creatine Gummies",
+    "brand": 1,
+    "category": 2,
+    "price": "18.00",
+    "size_or_quantity": "40 gummies",
+    "materials": "",
+    "ingredients": "Creatine Monohydrate, Gelatine, Pectin, Glucose syrup, Citric acid.",
+    "stock_quantity": 31,
+    "description": "Creatine gummies that make taking your daily dosage much easier! Try them and you wont regret it.",
+    "image": "products/images/creatine_gummies.png",
+    "is_active": true
+  }
+}
+]
