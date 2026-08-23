@@ -207,6 +207,16 @@ While deploying my project to Heroku, I ran into numerous issues, mainly due to 
 
 ### Bugs Fixed
 
+Products could be added beyond available stock, so I resolved it by checking the current quantity against the products stock quantity before it could be added to the bag. I also accounted for the products already in the bag by using different quantity totals.
+
+Cloudinary when installed caused my local tests in django to fail. This was due to using Cloudinary in the production environment but also needing to use local file storage for my local server tests. Resolved this by utilising a if statement within settings.
+
+Heroku was missing all of my database tables when I deployed. I then remembered I had to migrate them to the Heroku PostgreSQL database and then that resolved the issue.
+
+As mentioned above, I often run into a Stripe checkout error due to me having the secret key incorrect. This was resolved by checking the traceback and then resolving the key issue.
+
+Again a similar issue I had was that my Cloudinary key was incorrect, so I was not able to upload images how I wanted to. This again was resolved by following the traceback and resolving the error in my key.
+
 ### Known Bugs (Not fixed)
 
 Bug where card images are not uniform could not be resolved. Tried to override CSS and on the template but could not get the images to be uniform.
