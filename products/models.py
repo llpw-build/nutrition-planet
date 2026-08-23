@@ -3,18 +3,25 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Category(models.Model):
+
     name = models.CharField(
         max_length=100,
         unique=True,
     )
+
     friendly_name = models.CharField(
         max_length=100,
     )
 
+    class Meta:
+        verbose_name_plural = "Categories"
+
     def __str__(self):
         return self.friendly_name
 
+
 class Brand(models.Model):
+
     slug = models.SlugField(
         max_length=100,
         unique=True,
@@ -39,7 +46,6 @@ class Brand(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class Product(models.Model):
 

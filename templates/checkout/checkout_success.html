@@ -4,10 +4,13 @@
 
 {% for item in order.lineitems.all %}
 
-    <p>
+    <p> 
         {{ item.product }}
         × {{ item.quantity }}
         = £{{ item.lineitem_total }}
+
+        <strong>Order number:</strong>
+        {{ order.id }}
     </p>
 
 {% endfor %}

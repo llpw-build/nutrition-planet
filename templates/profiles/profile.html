@@ -45,7 +45,12 @@
                     <strong>Payment Status:</strong>
                     {{ order.payment_status }}
                 </p>
-
+                
+                <p>
+                <strong>Order number:</strong>
+                    {{ order.id }}
+                </p>
+                
                 <h6>Items</h6>
 
                 {% for item in order.lineitems.all %}

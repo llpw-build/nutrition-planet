@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
-
 from products.models import Product
+
 
 # Create your views here.
 
@@ -46,11 +46,25 @@ def add_to_bag(request, product_id):
 
     product_id = str(product_id)
 
-    if product_id in bag:
-        bag[product_id] += quantity
+    current_quantity = bag.get(
+        product_id,
+        0,
+    )
+    new_quantity = current_quantity + quantity
 
-    else:
-        bag[product_id] = quantity
+    if new_quantity > product.stock_quantity:
+        messages.error(
+            request,
+            f"Only {product.stock_quantity} of "
+            f"{product.name} are available.",
+        )
+
+        return redirect(
+            "product_detail",
+            product_id=product.id,
+        )
+
+    bag[product_id] = new_quantity
 
     request.session["bag"] = bag
 
@@ -64,13 +78,20 @@ def add_to_bag(request, product_id):
         product_id=product.id,
     )
 
+
 def view_bag(request):
     return render(
         request,
         "bag/bag.html",
     )
 
+
 def update_bag(request, product_id):
+
+    product = get_object_or_404(
+        Product,
+        id=product_id,
+    )
 
     try:
         quantity = int(
@@ -97,6 +118,17 @@ def update_bag(request, product_id):
             "view_bag"
         )
 
+    if quantity > product.stock_quantity:
+        messages.error(
+            request,
+            f"Only {product.stock_quantity} of "
+            f"{product.name} are available.",
+        )
+
+        return redirect(
+            "view_bag"
+        )
+
     bag = request.session.get(
         "bag",
         {},
@@ -117,7 +149,9 @@ def update_bag(request, product_id):
         "view_bag"
     )
 
+
 def remove_from_bag(request, product_id):
+
     bag = request.session.get(
         "bag",
         {},
