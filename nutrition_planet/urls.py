@@ -18,10 +18,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth.views import LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('products/', include("products.urls")),
+    path('accounts/login/', LoginView.as_view(
+        template_name='registration/login.html',
+        redirect_authenticated_user=True,
+    ),  name='login',),
     path('accounts/', include("django.contrib.auth.urls")),
     path('accounts/', include("profiles.urls")),
     path('', include("main.urls")),
