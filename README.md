@@ -111,52 +111,75 @@ Admin CRUD has been added, including being able to create brands, products, cate
 
 ### UX/Design
 
-For my project, I have chosen one of my favorite colourways which is baby blue and black. As these are stark contrasts I have also used white to offset the harshness that otherwise would have been off putting for the user.
+For my project, I have chosen one of my favorite colourways which is baby blue and black. As these are stark contrasts I have also used white to offset the harshness that otherwise would have been off putting for the user. These are used throughout the website to create a recognisable brand when users are using the site.
 
 ### Bootstrap Responsive Layout
 
-Bootstrap has been been used through the project in order to help design the site as "mobile first" and allow easy customisation throughout. 
+Bootstrap has been been used through the project in order to help design the site as "mobile first" and allow easy customisation throughout. I have utlisied Boostraps classes where possible to create a responsive grid system for the product cards, but allowing them to take up more space/ less space depending on the screen size.
 
 ### Navbar
 
-A traditional Navbar has been added to the project, with links to seperate URLs and a logo that when clicked, redirects the user to home. Due to authentication the user will see different links whether they are logged in or out.
+A traditional Navbar has been added to the project, with links to seperate URLs and a logo that when clicked, redirects the user to home. Due to authentication the user will see different links whether they are logged in or out. The Navbar is also responsive and on smaller screens become a hamburger style menu.
 
 ### Homepage
 
-The homepage has the companies logo to grab the users attention, a short welcome message and slogan followed by a convenient button that will take the user to the product catalogue. If the user moves further down the page, they will see the short about us section prividfing a brief overview.
+The homepage has the company's logo to grab the user's attention, a short welcome message and slogan followed by a convenient button that will take the user to the product catalogue. If the user moves further down the page, they will see the short About Us section providing a brief overview of Planet Nutrition.
 
 ### Product Cards
 
-Within the Product Catalogue, I used bootstrap to create product cards for a clean view of a selection of products that is responsive depending on what screen size the website is being viewed on.
+Within the Product Catalogue, I used bootstrap to create product cards for a clean view of a selection of products that is responsive depending on what screen size the website is being viewed on. These cards are created using infromation from the Model; the information is name, brand, price, stock availability etc. Clicking on the product card takes the user to the Product Detail page.
 
 ### Mobile and tablet responsiveness
 
-Depending on whether the user is viewing the project on either a mobile or tablet, the website adjusts its contents to be able to still be viewied in an appealing manner with a clean user interface.
+Depending on whether the user is viewing the project on either a mobile or tablet, the website adjusts its contents to be able to still be viewied in an appealing manner with a clean user interface. This ties back into the Bootstrap responsive classes that are mentioned above and are used throughout the site for this reason.
 
 ## Wireframes
 
 ## Future Features
+
+If I had not run into as many problems as I did, due to the steep learning curve of implementing Stripe, Cloudinary, Webhook code and so on, I feel I could have achieved much more with this product. Some of the features I would have liked to have included are:
+- Blog section
+- Fitness plan section
+- Further styling to the Footer and Navbar
+- A dedicated reward points section based on order amount and how many orders
+- A wishlist allowing logged-in users to save products for later.
 
 ## Database Design
 
 ### Database Schema / ERD
 
 ### Models
+
 #### Category
+
+My Category Model has a one-to-many relationship with Products, meaning one Category can contain many Products, while each Product belongs to one Category. The Category stores a name and friendly name, which are then utilised throughout the Product catalogue to organise and filter products.
+
 #### Brand
+
+My Brand Model again has a one-to-many relationship with Products, meaning that one Brand can contain many Products, while each Product belongs to one Brand. The Brand stores a logo, slug, brand name, description and website which can then be utilised throughout the website, including alongside the relevant Products.
+
 #### Product
+
+My Product Model has a many-to-one relationship with Brand and Category, meaning many Products can belong to one Brand or Category. Product also has a one-to-many relationship with OrderLineItem, as one Product can appear in many different OrderLineItems. The Product Model stores key information such as the name, materials, size or quantity, stock amount, price, description, image and whether the product is active.
+
 #### Review
+
+My Review Model has a many-to-one relationship with Products, as one Product can have many Reviews. It also has a many-to-one relationship with Users, as one User can create multiple Reviews. When saved this is then displayed to the Product Detail page.
+
 #### UserProfile
+
+My UserProfile has a one to one relationship with User, and I have set up User so that when a User registers for an account, it also creates a UserProfile for them. The UserProfile takes numerous bits of information, such as address, phone number etc.
 #### Order
+
+My Order Model has a many to one relationship with my UserProfile, meaning that one UserProfile can have many Orders associated with it. The Order stores the customer's delivery information, email, order total, payment status and Stripe PaymentIntent ID this is a key relationship that at first I struggled with, but now understand this allows the order to be associated with the right Stripe PaymentIntent ID.
+
 #### OrderLineItem
+
+
 
 ### Model Relationships
 
-## E-Commerce / Business Model
-### Purpose of the Store
-### Target Customer
-### Products
-### Customer Journey
+
 
 ### Technologies used
 
