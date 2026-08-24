@@ -13,8 +13,6 @@ Planet Nutrition is a sports equipment and supplements e-commerce website, that 
 [Planet Nutrition](https://nutrition-planet-e0408406543d.herokuapp.com/)
 [Github](https://github.com/llpw-build/nutrition-planet)
 
-## Table of contents
-
 ## Project goals
 
 ### Site Owner Goals
@@ -78,7 +76,7 @@ The product catalogue provides the user with a clean and simple view utilising b
 
 ### Search 
 
-A simple search capability was created to help the users find the products they require more easily. This was created also using bootstrap and styled to match the rest of the chosed colour pallete.
+A simple search capability was created to help the users find the products they require more easily. This was created also using bootstrap and styled to match the rest of the chosen colour pallete.
 
 ### Category filtering and sorting
 
@@ -210,7 +208,7 @@ Heroku
 
 ## Testing
 
-### Manaul Testing
+### Manual Testing
 
 I have carried out "smoke tests" numerous times, before deployment, during deployment and also after deployment while polishing my project. Numerous issues were found and resolved as I will list in the section beneath. I have also created a Feature Testing table to demonstrate these tests.
 
@@ -225,12 +223,13 @@ While deploying my project to Heroku, I ran into numerous issues, mainly due to 
 ### Feature Testing
 
 | Feature | Test | Expected Result | Actual Result | Pass/Fail |
-| Navbar link | Taken to requested page | Right page displayed | Right page disoplayed | Pass |
-| "Shop products" button | Taken to product catalogue | Product catalogue displayed | Product catalogue displayed | Pass |
+| --- | --- | --- | --- | --- |
+| Navbar link | Taken to requested page | Right page displayed | Right page displayed | Pass |
+| "Shop Products" button | Taken to product catalogue | Product catalogue displayed | Product catalogue displayed | Pass |
 | Product detail page | Taken to product detail | Right page and information displayed | Right page and information displayed | Pass |
 | Change quantity and add to bag | Product added to bag | Right amount in bag | Right amount in bag | Pass |
 | Review | Review is successfully shown | Review shown on product page | Review shown on product page | Pass |
-| Save deatils to profile | Details are stored and displayed on profile | Details load correctly | Details load correctly | Pass |
+| Save details to profile | Details are stored and displayed on profile | Details load correctly | Details load correctly | Pass |
 | Checkout | Successfully checkout and place an order | Successful checkout | Successful checkout | Pass |
 | Search | Search for existing product | Matching product displayed | Matching product displayed | Pass |
 | Bag | Add valid quantity | Product added | Product added | Pass |
@@ -238,9 +237,9 @@ While deploying my project to Heroku, I ran into numerous issues, mainly due to 
 
 ## Bugs
 
-### Bugs Found During Development
-
 ### Bugs Fixed
+
+The product fixture failed to load into the deployed PostgreSQL database because of a file encoding issue. I resolved this by recreating the fixture with Django's dumpdata command, committing the corrected file and then loading the data into the production database using loaddata.
 
 Products could be added beyond available stock, so I resolved it by checking the current quantity against the products stock quantity before it could be added to the bag. I also accounted for the products already in the bag by using different quantity totals.
 
@@ -272,11 +271,15 @@ DEBUG as required is set to False and disabled to stop users seeing debugging in
 
 ### Authentication and Authorisation
 
-Django authentication has been utilised throughout the project.
+Django authentication has been utilised throughout the project. Certain functionality, such as leaving reviews and accessing a User Profile, requires the user to be authenticated.
 
 ### CSRF Protection
 
 CSRF protection has been utilised on POST forms.
+
+### Stripe Security
+
+Stripe Keys stored securely using config vars and .env. Stripe and Webhook events are verified using Stripe Signature and Webhook secret before the event data can be utilised by django.
 
 ### Staff Permissions
 
@@ -286,21 +289,39 @@ Admin actions have been limited to staff only. Normal users cannot access these.
 
 ### Local Development
 
+For local development I cloned my repository using VScode. I then also created a virutal environment in my terminal to be able to install packages. I created a requirements.txt to track what packages I used. I used .env to protect my important keys. I ran migrations to create the database tables and also ran the local Django development server.
+
 ### Heroku Deployment
+
+For Heroku deployment, I had to link my GitHub repository to the Heroku app, then set my Config Vars and added a PostgreSQL database. I then ran migrations from the Heroku terminal and checked the deployed site after deployment to ensure everything was working correctly.
 
 ### Environment Variables / Config Vars
 
+Environment variables were used throughout my project locally and I utilised a .env file and also a gitignore file to avoid any keys being revealed. Then for deployment, I utilised Heroku's config vars in order to protect any keys. These included ones for Django, Stripe and Cloudinary.
+
 ### PostgreSQL
+
+SQlite was used for convenience during local development and during deployment I used PostgreSQL. Once this was added to Heroku, I ran migrations.
 
 ### Static Files / WhiteNoise
 
+WhiteNoise was used for the deployed version of Planet Nutrition. Static files such as CSS and JavaScript are collected by Django and made available within the production environment. WhiteNoise allows Heroku to serve these static files without a separate static file server.
+
 ### Media Files / Cloudinary
+
+Cloudinary was used to serve media files to my deployed site. During development for my tests, I also used an if statement to allow tests to pass whether using local storage or Cloudinary storage.
 
 ### Stripe Configuration
 
+For my deployed site, I added the required keys to my config vars on Heroku to allow payments to continue to work. I also created a "Webhook endpoint" for the deployed version of my site. I also used Stripe test mode throughout development and deployment.
+
 ### Database Migrations
 
+Whenever I made Django models or made changes to them, I always ran makemigrations and migrate locally. When deployed, as mentioned above, I used PostgreSQL and ran migrations on Heroku.
+
 ### Fixtures / Product Data
+
+Product data was stored within a fixture so that it could be loaded into the database without me manually recreating every Product again. During deployment I found an issue loading the fixture due to its file. I solved this by recreating the fixture using Django's dumpdata command, committing the corrected fixture and then using loaddata.
 
 ## Version Control
 
