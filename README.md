@@ -8,7 +8,10 @@
 
 Planet Nutrition is a sports equipment and supplements e-commerce website, that is targeted at users who are late teenagers onwards who have an interest in sporting goods. The website aims to be a one stop shop for all sporting needs, providing a clean and hassle free ordering system designed with simplicity in mind.
 
-## Live Website
+## Live Website and Github
+
+[Planet Nutrition](https://nutrition-planet-e0408406543d.herokuapp.com/)
+[Github](https://github.com/llpw-build/nutrition-planet)
 
 ## Table of contents
 
@@ -44,7 +47,7 @@ Planet Nutrition is a sports equipment and supplements e-commerce website, that 
 9. Confirmation or rejection.
 10. Order is saved to the user profile.
 
-## Target Audience
+## Target Customer
 
 The website aims to target users who are late teenagers onwards who have an interest in sporting goods and are able to make purhcases online.
 
@@ -175,11 +178,20 @@ My Order Model has a many to one relationship with my UserProfile, meaning that 
 
 #### OrderLineItem
 
+My OrderLineItem Model has a many to one relationshiop with Product and also a many to one relationship with my Order Model. This is a key relationship fro my project, as we use the OrderLineItem to represent the individual Products and their quantities within an Order. Each OrderLineItem calculates its own total by multiplying the Product price by its quantity. The Order can then calculate its overall total using all of the OrderLineItems associated with it in order to avoid any errors within the Order total.
 
 
 ### Model Relationships
 
-
+As mentioned above, my project has many Model Relationships which I will now outline below:
+- User and Userprofile have one to one relationship. Every User has only one Profile.
+- UserProfile and Order have a many to one relationship. One UserProfile may have many Orders.
+- Brand and Product have a many to one relationship. One Brand may had many Products.
+- Category and Product have a many to one relationship. One Category may have many Products.
+- Product and Review have a one to many relationship. One Product may have many Reviews.
+- User and Review have a one to many relationship. One User may have many Reviews.
+- Order and OrderLineItem have a one to many relationship. One Order may have many OrderLineItems.
+- Product and OrderlineItem have a one many relationship. One Product may belong to many OrderLineItems.
 
 ### Technologies used
 
@@ -293,12 +305,40 @@ Admin actions have been limited to staff only. Normal users cannot access these.
 ## Version Control
 
 ### Git
+
+Throughout my project I regularly used git as you will see from my work history as I added and committed changes. Commit messages describe the work that was carried out and this allowed me to track my project as I worked on it.
+
 ### GitHub
+
+I hosted my repository on Github and pushed my commits to it throughout.
 
 ## Credits
 
 ### Code
+
+The code for Planet Nutrition was written by myself while using the course material as my main go to point for any issues I came across. During development I always referred to official documentation and guides when learning how to implement any features or troublshoot any functionality issues I ran across. These were used as guides rather than as actual full solutions, with them being adapted for my own project.
+
 ### Documentation
+
+- [Django Documentation](https://docs.djangoproject.com/) - Used as a reference for Django models, views, forms, authentication, testing and other Django functionality.
+- [Stripe Documentation](https://docs.stripe.com/) - Used as a reference when implementing Stripe payments, PaymentIntents and Webhooks.
+- [Bootstrap Documentation](https://getbootstrap.com/docs/) - Used when creating the responsive layout, Navbar, product cards, buttons and other UI elements.
+- [Cloudinary Documentation](https://cloudinary.com/documentation) - Used when configuring Cloudinary for image and media storage.
+- [Heroku Documentation](https://devcenter.heroku.com/) - Used as a reference when deploying the application to Heroku.
+
+
 ### Images
+
+I created all of the images myself.
+
 ### Content
+
+All of the written content and website name was written by myself.
+
 ### Libraries / Frameworks
+
+- Django
+- Bootstrap
+- Stripe
+- Cloudinary
+- WhiteNoise
