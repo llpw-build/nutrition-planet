@@ -214,7 +214,7 @@ I have carried out "smoke tests" numerous times, before deployment, during deplo
 
 ### Automated Testing
 
-On django, you will see that I have added many tests to ensure the full django process is running while using a test environment and test database. Numerous times these tests failed, often due to wrong keys in settings. These tests range from Products (adding a product etc), Users (creating and logging in an a user), Checkout (being able to place an order successfully and testing behaviour based on whether the test succeeds or fails) and so on.
+On django, you will see that I have added many tests to ensure the full django process is running while using a test environment and test database. Numerous times these tests failed, often due to wrong keys in settings. These tests range from Products (adding a product etc), Users (creating and logging in an a user), Checkout (being able to place an order successfully and testing behaviour based on whether the test succeeds or fails) and so on. A final automated test run was completed before submission. All 25 tests passed successfully in 32.881s. Django's system check also completed without identifying any issues.
 
 ### Deployment Testing
 
@@ -224,16 +224,43 @@ While deploying my project to Heroku, I ran into numerous issues, mainly due to 
 
 | Feature | Test | Expected Result | Actual Result | Pass/Fail |
 | --- | --- | --- | --- | --- |
-| Navbar link | Taken to requested page | Right page displayed | Right page displayed | Pass |
-| "Shop Products" button | Taken to product catalogue | Product catalogue displayed | Product catalogue displayed | Pass |
-| Product detail page | Taken to product detail | Right page and information displayed | Right page and information displayed | Pass |
-| Change quantity and add to bag | Product added to bag | Right amount in bag | Right amount in bag | Pass |
-| Review | Review is successfully shown | Review shown on product page | Review shown on product page | Pass |
-| Save details to profile | Details are stored and displayed on profile | Details load correctly | Details load correctly | Pass |
-| Checkout | Successfully checkout and place an order | Successful checkout | Successful checkout | Pass |
+| Navbar link | Select a Navbar link | Correct page displayed | Correct page displayed | Pass |
+| "Shop Products" button | Select "Shop Products" | Product catalogue displayed | Product catalogue displayed | Pass |
+| Registration | Register a new account | Account and UserProfile created and user logged in | Account and UserProfile created and user logged in | Pass |
+| Register restriction | Visit register page while already logged in | Registration form cannot be accessed | User redirected with appropriate message | Pass |
+| Login restriction | Visit login page while already logged in | Login form cannot be accessed | User redirected away from login page | Pass |
+| Logout | Logout from an authenticated account | User successfully logged out | User successfully logged out | Pass |
+| Product catalogue | Open product catalogue | Products and images displayed | Products and images displayed | Pass |
+| Product detail page | Select a product | Correct product information displayed | Correct product information displayed | Pass |
 | Search | Search for existing product | Matching product displayed | Matching product displayed | Pass |
-| Bag | Add valid quantity | Product added | Product added | Pass |
-| Stock | Add more than available | Request rejected | Request rejected | Pass |
+| Invalid search | Search for non-existent product | No-results feedback displayed | No-results feedback displayed | Pass |
+| Category filter | Select a category | Products from selected category displayed | Correct products displayed | Pass |
+| Price sorting | Sort products low-high and high-low | Products displayed in correct order | Products displayed in correct order | Pass |
+| Combined search/filter/sort | Combine catalogue options | Search, filtering and sorting work together | Correct combined results displayed | Pass |
+| Add to bag | Add valid quantity | Correct product and quantity added | Correct product and quantity added | Pass |
+| Add same product again | Add more of a product already in bag | Quantity updated correctly | Quantity updated correctly | Pass |
+| Update bag | Change product quantity in bag | Quantity and totals recalculated | Quantity and totals recalculated | Pass |
+| Multiple products | Add multiple different products | Products stored and total calculated | Products and total displayed correctly | Pass |
+| Remove from bag | Remove a product | Product removed and total recalculated | Product removed and total recalculated | Pass |
+| Stock validation | Add more than available stock | Request rejected | Request rejected | Pass |
+| Existing quantity stock validation | Existing bag quantity plus new quantity exceeds stock | Request rejected | Request rejected | Pass |
+| Out-of-stock product | Attempt to purchase product with no stock | Purchase prevented | Purchase prevented | Pass |
+| Save details to profile | Save profile information | Details stored and displayed | Details stored and displayed correctly | Pass |
+| Review | Logged-in user submits review | Review displayed on product page | Review displayed on product page | Pass |
+| Review authentication | Attempt review functionality while logged out | Access prevented | Access prevented | Pass |
+| Staff permissions | Normal user attempts staff-only functionality | Access denied | Access denied | Pass |
+| Checkout | Proceed through checkout | Checkout form and Stripe payment interface displayed | Checkout loaded correctly | Pass |
+| Successful Stripe payment | Complete successful Stripe test payment | Payment accepted and success feedback displayed | Payment accepted and success feedback displayed | Pass |
+| Order creation | Complete successful checkout | Order stored correctly | Order stored correctly | Pass |
+| Order history | View profile after purchase | New order displayed in order history | New order displayed correctly | Pass |
+| Payment status | Complete successful payment | Order marked as paid | Order marked as paid | Pass |
+| Stock after purchase | Complete successful purchase | Purchased stock decreases | Stock decreased correctly | Pass |
+| Bag after purchase | Complete successful purchase | Bag cleared | Bag cleared correctly | Pass |
+| Declined Stripe payment | Use declined Stripe test payment | Payment rejected and failure feedback displayed | Payment rejected and failure feedback displayed | Pass |
+| Responsive layout | Test desktop, tablet and mobile sizes | Website remains usable and responsive | Layout displayed correctly at tested sizes | Pass |
+| Mobile Navbar | Test navigation at mobile size | Responsive navigation available | Hamburger navigation displayed and worked | Pass |
+| Static and media files | Browse deployed website | CSS, JavaScript and images load correctly | Assets loaded correctly | Pass |
+| Internal navigation | Test main website links | Links lead to correct pages without errors | Links worked correctly | Pass |
 
 ## Bugs
 
@@ -254,6 +281,8 @@ Again a similar issue I had was that my Cloudinary key was incorrect, so I was n
 ### Known Bugs (Not fixed)
 
 Bug where card images are not uniform could not be resolved. Tried to override CSS and on the template but could not get the images to be uniform.
+
+Following a declined Stripe payment, the checkout page may need to be refreshed before another payment attempt can be made. The declined payment is handled correctly and the user receives payment failure feedback, but refreshing the page is at the moment, required before retrying.
 
 ## Security
 
