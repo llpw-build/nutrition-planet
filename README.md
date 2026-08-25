@@ -8,7 +8,7 @@
 
 ## Introduction:
 
-Planet Nutrition is a sports equipment and supplements e-commerce website, that is targeted at users who are late teenagers onwards who have an interest in sporting goods. The website aims to be a one stop shop for all sporting needs, providing a clean and hassle free ordering system designed with simplicity in mind.
+Planet Nutrition is a sports equipment and supplements e-commerce website, that is targeted at users who are late teenagers onwards who have an interest in sporting goods. The website aims to be a one stop shop for all sporting needs, providing a clean and hassle-free ordering system designed with simplicity in mind.
 
 ## Live Website and Github
 
@@ -21,13 +21,13 @@ Planet Nutrition is a sports equipment and supplements e-commerce website, that 
 
 - Have an easy to user e-commerce website that customers can easily use to purchase sporting goods and supplements.
 - Allow customers to search, browse and filter the products on the website.
-- Utiilise Stripe for secure payments.
-- Ecourage footfall and user to then create accounts and purchase.
+- Utilise Stripe for secure payments.
+- Encourage footfall and user to then create accounts and purchase.
 - Allow staff to be able to manage the products on the website.
 
 ### User Goals
 
-- Easily purhcase sporting goods and supplements.
+- Easily purchase sporting goods and supplements.
 - Easily look through the products on the store.
 - View their order and previous orders.
 - Leave reviews on the products.
@@ -49,7 +49,7 @@ Planet Nutrition is a sports equipment and supplements e-commerce website, that 
 
 ## Target Customer
 
-The website aims to target users who are late teenagers onwards who have an interest in sporting goods and are able to make purhcases online.
+The website aims to target users who are late teenagers onwards who have an interest in sporting goods and are able to make purchases online.
 
 ## User Stories
 
@@ -58,7 +58,7 @@ The website aims to target users who are late teenagers onwards who have an inte
 - As a user, I want to be able to see my bag total so that I know how many products I am purchasing.
 - As a user, I want to be able to create an account so that I am able to save my information for future purchases.
 - As a user, I want to be able to see whether my order was successful or not so that I can try again if it has failed.
-- As a user, I want to be able to pay with Stripe so that I can safely complete my purhcase.
+- As a user, I want to be able to pay with Stripe so that I can safely complete my purchase.
 - As a user, I want an order number so that I can easily find my order.
 - As a user, I want to be able to add numerous products to my bag so that I can order numerous items.
 - As a user, I want to be able to update my products in my bag so that I can change the amount when needed before checkout.
@@ -78,11 +78,11 @@ The product catalogue provides the user with a clean and simple view utilising b
 
 ### Search 
 
-A simple search capability was created to help the users find the products they require more easily. This was created also using bootstrap and styled to match the rest of the chosen colour pallete.
+A simple search capability was created to help the users find the products they require more easily. This was created also using bootstrap and styled to match the rest of the chosen colour palette.
 
 ### Category filtering and sorting
 
-Added category and sorting capabilites to the product catalogue to improve user experience.
+Added category and sorting capabilities to the product catalogue to improve user experience.
 
 ### Product Details pages
 
@@ -118,11 +118,11 @@ For my project, I have chosen one of my favorite colourways which is baby blue a
 
 ### Bootstrap Responsive Layout
 
-Bootstrap has been been used through the project in order to help design the site as "mobile first" and allow easy customisation throughout. I have utlisied Boostraps classes where possible to create a responsive grid system for the product cards, but allowing them to take up more space/ less space depending on the screen size.
+Bootstrap has been been used through the project in order to help design the site as "mobile first" and allow easy customisation throughout. I have utilised Boostrap's classes where possible to create a responsive grid system for the product cards, but allowing them to take up more space/ less space depending on the screen size.
 
 ### Navbar
 
-A traditional Navbar has been added to the project, with links to seperate URLs and a logo that when clicked, redirects the user to home. Due to authentication the user will see different links whether they are logged in or out. The Navbar is also responsive and on smaller screens become a hamburger style menu.
+A traditional Navbar has been added to the project, with links to separate URLs and a logo that when clicked, redirects the user to home. Due to authentication the user will see different links whether they are logged in or out. The Navbar is also responsive and on smaller screens become a hamburger style menu.
 
 ### Homepage
 
@@ -130,11 +130,11 @@ The homepage has the company's logo to grab the user's attention, a short welcom
 
 ### Product Cards
 
-Within the Product Catalogue, I used bootstrap to create product cards for a clean view of a selection of products that is responsive depending on what screen size the website is being viewed on. These cards are created using infromation from the Model; the information is name, brand, price, stock availability etc. Clicking on the product card takes the user to the Product Detail page.
+Within the Product Catalogue, I used bootstrap to create product cards for a clean view of a selection of products that is responsive depending on what screen size the website is being viewed on. These cards are created using information from the Model; the information is name, brand, price, stock availability etc. Clicking on the product card takes the user to the Product Detail page.
 
 ### Mobile and tablet responsiveness
 
-Depending on whether the user is viewing the project on either a mobile or tablet, the website adjusts its contents to be able to still be viewied in an appealing manner with a clean user interface. This ties back into the Bootstrap responsive classes that are mentioned above and are used throughout the site for this reason.
+Depending on whether the user is viewing the project on either a mobile or tablet, the website adjusts its contents to be able to still be viewed in an appealing manner with a clean user interface. This ties back into the Bootstrap responsive classes that are mentioned above and are used throughout the site for this reason.
 
 ## Wireframes
 
@@ -182,7 +182,7 @@ My Order Model has a many to one relationship with my UserProfile, meaning that 
 
 #### OrderLineItem
 
-My OrderLineItem Model has a many to one relationshiop with Product and also a many to one relationship with my Order Model. This is a key relationship fro my project, as we use the OrderLineItem to represent the individual Products and their quantities within an Order. Each OrderLineItem calculates its own total by multiplying the Product price by its quantity. The Order can then calculate its overall total using all of the OrderLineItems associated with it in order to avoid any errors within the Order total.
+My OrderLineItem Model has a many to one relationship with Product and also a many to one relationship with my Order Model. This is a key relationship for my project, as we use the OrderLineItem to represent the individual Products and their quantities within an Order. Each OrderLineItem calculates its own total by multiplying the Product price by its quantity. The Order can then calculate its overall total using all of the OrderLineItems associated with it in order to avoid any errors within the Order total.
 
 
 ### Model Relationships
@@ -220,7 +220,7 @@ I have carried out "smoke tests" numerous times, before deployment, during deplo
 
 ### Automated Testing
 
-On django, you will see that I have added many tests to ensure the full django process is running while using a test environment and test database. Numerous times these tests failed, often due to wrong keys in settings. These tests range from Products (adding a product etc), Users (creating and logging in an a user), Checkout (being able to place an order successfully and testing behaviour based on whether the test succeeds or fails) and so on. A final automated test run was completed before submission. All 25 tests passed successfully in 32.881s. Django's system check also completed without identifying any issues.
+On django, you will see that I have added many tests to ensure the full django process is running while using a test environment and test database. Numerous times these tests failed, often due to wrong keys in settings. These tests range from Products (adding a product etc), Users (creating and logging in an a user), Checkout (being able to place an order successfully and testing behaviour based on whether the test succeeds or fails) and so on. A final automated test run was completed before submission. All 25 tests passed successfully in 7.521s. Django's system check also completed without identifying any issues.
 
 ### Deployment Testing
 
@@ -324,7 +324,7 @@ Admin actions have been limited to staff only. Normal users cannot access these.
 
 ### Local Development
 
-For local development I cloned my repository using VScode. I then also created a virutal environment in my terminal to be able to install packages. I created a requirements.txt to track what packages I used. I used .env to protect my important keys. I ran migrations to create the database tables and also ran the local Django development server.
+For local development I cloned my repository using VScode. I then also created a virtual environment in my terminal to be able to install packages. I created a requirements.txt to track what packages I used. I used .env to protect my important keys. I ran migrations to create the database tables and also ran the local Django development server.
 
 ### Heroku Deployment
 
@@ -414,7 +414,7 @@ The JavaScript used for the Stripe checkout functionality was checked using JSHi
 
 ### Code
 
-The code for Planet Nutrition was written by myself while using the course material as my main go to point for any issues I came across. During development I always referred to official documentation and guides when learning how to implement any features or troublshoot any functionality issues I ran across. These were used as guides rather than as actual full solutions, with them being adapted for my own project.
+The code for Planet Nutrition was written by myself while using the course material as my main go to point for any issues I came across. During development I always referred to official documentation and guides when learning how to implement any features or troubleshoot any functionality issues I ran across. These were used as guides rather than as actual full solutions, with them being adapted for my own project.
 
 ### Documentation
 
