@@ -4,6 +4,8 @@
 
 ### Planet Nutrition
 
+![Planet Nutrition](documentation/planet-nutrition.png)
+
 ## Introduction:
 
 Planet Nutrition is a sports equipment and supplements e-commerce website, that is targeted at users who are late teenagers onwards who have an interest in sporting goods. The website aims to be a one stop shop for all sporting needs, providing a clean and hassle free ordering system designed with simplicity in mind.
@@ -136,6 +138,8 @@ Depending on whether the user is viewing the project on either a mobile or table
 
 ## Wireframes
 
+![Planet Nutrition Wireframes](documentation/wireframes.png)
+
 ## Future Features
 
 If I had not run into as many problems as I did, due to the steep learning curve of implementing Stripe, Cloudinary, Webhook code and so on, I feel I could have achieved much more with this product. Some of the features I would have liked to have included are:
@@ -148,6 +152,8 @@ If I had not run into as many problems as I did, due to the steep learning curve
 ## Database Design
 
 ### Database Schema / ERD
+
+![Planet Nutrition Database ERD](documentation/erd.png)
 
 ### Models
 
@@ -361,6 +367,48 @@ Throughout my project I regularly used git as you will see from my work history 
 ### GitHub
 
 I hosted my repository on Github and pushed my commits to it throughout.
+
+### Validation Testing
+
+#### HTML Validation
+
+The deployed website was tested using the W3C HTML Validator.
+
+##### Homepage
+
+![Homepage HTML Validation](documentation/homepageval.png)
+
+##### Products
+
+![Products HTML Validation](documentation/productsval.png)
+
+##### Shopping Bag
+
+![Shopping Bag HTML Validation](documentation/bagval.png)
+
+##### User Profile
+
+![Profile HTML Validation](documentation/profileval.png)
+
+##### Login
+
+![Login HTML Validation](documentation/loginval.png)
+
+##### Register
+
+![Register HTML Validation](documentation/registerval.png)
+
+#### CSS Validation
+
+The CSS used throughout Planet Nutrition was tested using the W3C CSS Validation.
+
+![CSS Validation](documentation/cssvalidator.png)
+
+#### JavaScript Validation
+
+The JavaScript used for the Stripe checkout functionality was checked using JSHint. The warnings shown relate to modern JavaScript features such as `const`, `async` functions and template literals, which require the appropriate ES6/ES8 configuration in JSHint.
+
+![JSHint Validation](documentation/jshint.png)
 
 ## Credits
 
