@@ -3,6 +3,8 @@ from django.urls import reverse
 from django.contrib.auth import get_user_model
 
 # Create your tests here.
+
+
 class RegisterTests(TestCase):
 
     def test_registration_page_returns_200(self):
@@ -10,7 +12,8 @@ class RegisterTests(TestCase):
         response = self.client.get(reverse("register"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "registration/register.html",)
-        self.assertContains(response,"Register",)
+        self.assertContains(response, "Register",)
+
 
 class UserProfileTests(TestCase):
     def test_logged_in_user_can_access_profile(self):

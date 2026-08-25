@@ -2,6 +2,8 @@ from django.db import models
 from products.models import Product
 from profiles.models import UserProfile
 # Create your models here.
+
+
 class Order(models.Model):
 
     full_name = models.CharField(
@@ -73,6 +75,7 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order {self.id} - {self.full_name}"
+
 
 class OrderLineItem(models.Model):
 

@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+
+
 class Category(models.Model):
 
     name = models.CharField(
@@ -46,6 +48,7 @@ class Brand(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Product(models.Model):
 
@@ -95,12 +98,13 @@ class Product(models.Model):
         upload_to="products/images/",
     )
 
-    is_active= models.BooleanField(
+    is_active = models.BooleanField(
         default=True
     )
 
     def __str__(self):
         return self.name
+    
 
 class Review(models.Model):
 

@@ -1,9 +1,8 @@
-from django.test import TestCase
-from django.urls import reverse 
-from .models import Product, Brand, Category, Review
 from django.contrib.auth import get_user_model
+from django.test import TestCase
+from django.urls import reverse
+from .models import Brand, Category, Product, Review
 
-# Create your tests here.
 
 class ProductTests(TestCase):
 
@@ -51,7 +50,6 @@ class ProductTests(TestCase):
         )
 
     def test_str_returns_product_name(self):
-
         self.assertEqual(
             str(self.product),
             "Gold Standard Whey",
@@ -70,22 +68,31 @@ class ProductTests(TestCase):
             reverse(
                 "product_detail",
                 kwargs={
-                "product_id": self.product.id,
-            },
+                    "product_id": self.product.id,
+                },
+            )
         )
-    )
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "products/product_detail.html")
-        self.assertContains(response, "Gold Standard Whey")
+        self.assertTemplateUsed(
+            response,
+            "products/product_detail.html",
+        )
+        self.assertContains(
+            response,
+            "Gold Standard Whey",
+        )
 
     def test_search_returns_matching_products(self):
         response = self.client.get(
             reverse("all_products"),
             {"q": "whey"},
-    )
+        )
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
 
         self.assertContains(
             response,
@@ -93,20 +100,20 @@ class ProductTests(TestCase):
         )
 
         self.assertNotContains(
-        response,
-        "Creatine Monohydrate",
-    )
+            response,
+            "Creatine Monohydrate",
+        )
 
     def test_category_filter_returns_matching_products(self):
         response = self.client.get(
             reverse("all_products"),
             {"category": "protein-powder"},
-    )
+        )
 
         self.assertContains(
             response,
             "Gold Standard Whey",
-    )
+        )
 
         self.assertNotContains(
             response,
@@ -117,10 +124,10 @@ class ProductTests(TestCase):
         response = self.client.get(
             reverse("all_products"),
             {
-             "sort": "price",
-             "direction": "asc",
-        },
-    )
+                "sort": "price",
+                "direction": "asc",
+            },
+        )
 
         products = list(response.context["products"])
 
@@ -130,16 +137,18 @@ class ProductTests(TestCase):
         )
 
     def test_inactive_products_are_not_displayed(self):
-        response = self.client.get(reverse("all_products"))
+        response = self.client.get(
+            reverse("all_products")
+        )
 
         self.assertContains(
-        response,
-        "Gold Standard Whey",
+            response,
+            "Gold Standard Whey",
         )
 
         self.assertNotContains(
-        response,
-        "Inactive Test Product",
+            response,
+            "Inactive Test Product",
         )
 
     def test_invalid_product_id_returns_404(self):
@@ -157,12 +166,13 @@ class ProductTests(TestCase):
             404,
         )
 
+
 class ProductCreateTests(TestCase):
 
     def test_staff_user_can_access_add_product(self):
         User = get_user_model()
 
-        user = User.objects.create_user(
+        User.objects.create_user(
             username="staffuser",
             password="testpass123",
             is_staff=True,
@@ -183,27 +193,28 @@ class ProductCreateTests(TestCase):
         )
 
     def test_not_staff_user_can_access_add_product(self):
-            User = get_user_model()
-    
-            user = User.objects.create_user(
-                username="staffuser",
-                password="testpass123",
-                is_staff=False,
-            )
-    
-            self.client.login(
-                username="staffuser",
-                password="testpass123",
-            )
-    
-            response = self.client.get(
-                reverse("add_product")
-            )
-    
-            self.assertEqual(
-                response.status_code,
-                302,
-            )
+        User = get_user_model()
+
+        User.objects.create_user(
+            username="normaluser",
+            password="testpass123",
+            is_staff=False,
+        )
+
+        self.client.login(
+            username="normaluser",
+            password="testpass123",
+        )
+
+        response = self.client.get(
+            reverse("add_product")
+        )
+
+        self.assertEqual(
+            response.status_code,
+            302,
+        )
+
 
 class ProductUpdateDeleteTests(TestCase):
 
@@ -237,25 +248,24 @@ class ProductUpdateDeleteTests(TestCase):
             is_staff=True,
         )
 
-
     def test_staff_can_delete_product(self):
         self.client.login(
             username="staffuser",
             password="testpass123",
-    )
+        )
 
         self.client.post(
             reverse(
                 "delete_product",
-                 args=[self.product.id],
+                args=[self.product.id],
+            )
         )
-    )
 
         self.assertFalse(
             Product.objects.filter(
                 id=self.product.id
             ).exists()
-    )
+        )
 
     def test_staff_user_can_access_edit_product(self):
         self.client.login(
@@ -301,10 +311,10 @@ class ProductUpdateDeleteTests(TestCase):
             302,
         )
 
+
 class ReviewTests(TestCase):
 
     def setUp(self):
-
         self.brand = Brand.objects.create(
             slug="test-brand",
             name="Test Brand",
@@ -334,7 +344,6 @@ class ReviewTests(TestCase):
         )
 
     def test_logged_in_user_can_submit_review(self):
-
         self.client.login(
             username="reviewuser",
             password="testpass123",
@@ -346,8 +355,8 @@ class ReviewTests(TestCase):
                 args=[self.product.id],
             ),
             {
-            "rating": 5,
-            "comment": "Excellent product.",
+                "rating": 5,
+                "comment": "Excellent product.",
             },
         )
 
@@ -366,17 +375,16 @@ class ReviewTests(TestCase):
         )
 
     def test_logged_out_user_cannot_submit_review(self):
-
         response = self.client.post(
             reverse(
                 "product_detail",
                 args=[self.product.id],
-        ),
+            ),
             {
                 "rating": 5,
                 "comment": "I should not be allowed to post this.",
             },
-    )
+        )
 
         self.assertEqual(
             response.status_code,
@@ -391,7 +399,6 @@ class ReviewTests(TestCase):
         )
 
     def test_reviews_are_ordered_newest_first(self):
-
         first_review = Review.objects.create(
             product=self.product,
             user=self.user,

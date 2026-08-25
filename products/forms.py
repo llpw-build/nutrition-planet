@@ -1,6 +1,7 @@
 from django import forms
 from .models import Product, Review
 
+
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
@@ -18,6 +19,7 @@ class ProductForm(forms.ModelForm):
                 "image",
                 "is_active",
         )
+        
 
 class ReviewForm(forms.ModelForm):
 

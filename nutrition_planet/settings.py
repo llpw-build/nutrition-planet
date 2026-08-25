@@ -25,7 +25,7 @@ environ.Env.read_env(BASE_DIR / ".env")
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DEBUG", default = True)
+DEBUG = env.bool("DEBUG", default=True)
 
 STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
 
@@ -109,7 +109,8 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+        'UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
@@ -140,7 +141,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [ BASE_DIR / "static",]
+STATICFILES_DIRS = [BASE_DIR / "static",]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 

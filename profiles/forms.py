@@ -8,6 +8,7 @@ class userRegisterForm (UserCreationForm):
     first_name = forms.CharField(max_length=25, required=True)
     last_name = forms.CharField(max_length=30, required=True)
 
+
     class Meta:
         model = User
 
@@ -19,6 +20,7 @@ class userRegisterForm (UserCreationForm):
             "password1",
             "password2",
         ]
+
 
 class UserProfileForm(forms.ModelForm):
 

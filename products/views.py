@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import user_passes_test
-from .models import Product, Category, Review
+from .models import Product, Category
 from .forms import ProductForm, ReviewForm
 
 
@@ -155,6 +155,7 @@ def add_product(request):
         context,
     )
 
+
 @user_passes_test(lambda user: user.is_staff)
 def edit_product(request, product_id):
     product = get_object_or_404(
@@ -197,6 +198,7 @@ def edit_product(request, product_id):
         "products/edit_product.html",
         context,
     )
+
 
 @user_passes_test(lambda user: user.is_staff)
 def delete_product(request, product_id):
