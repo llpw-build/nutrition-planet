@@ -431,3 +431,33 @@ class ReviewTests(TestCase):
             reviews[1],
             first_review,
         )
+
+    def test_review_owner_can_open_edit_page(self):
+        review = Review.objects.create(
+            product=self.product,
+            user=self.user,
+            rating=4,
+            comment="Original review.",
+        )
+
+        self.client.login(
+            username="reviewuser",
+            password="testpass123",
+        )
+
+        response = self.client.get(
+            reverse(
+                "edit_review",
+                args=[review.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertEqual(
+            response.context["review"],
+            review,
+        )
