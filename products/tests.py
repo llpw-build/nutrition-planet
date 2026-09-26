@@ -461,3 +461,47 @@ class ReviewTests(TestCase):
             response.context["review"],
             review,
         )
+
+    def test_review_owner_can_update_review(self):
+        review = Review.objects.create(
+            product=self.product,
+            user=self.user,
+            rating=4,
+            comment="Original review.",
+        )
+
+        self.client.login(
+            username="reviewuser",
+            password="testpass123",
+        )
+
+        response = self.client.post(
+            reverse(
+                "edit_review",
+                args=[review.id],
+            ),
+            {
+                "rating": 5,
+                "comment": "Updated review.",
+            },
+        )
+
+        review.refresh_from_db()
+
+        self.assertEqual(
+            review.rating,
+            5,
+        )
+
+        self.assertEqual(
+            review.comment,
+            "Updated review.",
+        )
+
+        self.assertRedirects(
+            response,
+            reverse(
+                "product_detail",
+                args=[self.product.id],
+            ),
+        )

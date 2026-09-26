@@ -127,9 +127,29 @@ def edit_review(request, review_id):
         user=request.user,
     )
 
-    form = ReviewForm(
-        instance=review,
-    )
+    if request.method == "POST":
+        form = ReviewForm(
+            request.POST,
+            instance=review,
+        )
+
+        if form.is_valid():
+            form.save()
+
+            messages.success(
+                request,
+                "Review updated successfully.",
+            )
+
+            return redirect(
+                "product_detail",
+                product_id=review.product.id,
+            )
+
+    else:
+        form = ReviewForm(
+            instance=review,
+        )
 
     context = {
         "form": form,
