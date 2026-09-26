@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
-from .models import Brand, Category, Product, Review
+from .models import Brand, Category, Product, Review, User
 
 
 class ProductTests(TestCase):
@@ -504,4 +504,50 @@ class ReviewTests(TestCase):
                 "product_detail",
                 args=[self.product.id],
             ),
+        )
+
+    def test_non_owner_cannot_update_review(self):
+        review = Review.objects.create(
+            product=self.product,
+            user=self.user,
+            rating=4,
+            comment="Original review.",
+        )
+
+        other_user = User.objects.create_user(
+            username="otheruser",
+            password="testpass123",
+        )
+
+        self.client.login(
+            username="otheruser",
+            password="testpass123",
+        )
+
+        response = self.client.post(
+            reverse(
+                "edit_review",
+                args=[review.id],
+            ),
+            {
+                "rating": 1,
+                "comment": "Malicious change.",
+            },
+        )
+
+        review.refresh_from_db()
+
+        self.assertEqual(
+            response.status_code,
+            404,
+        )
+
+        self.assertEqual(
+            review.rating,
+            4,
+        )
+
+        self.assertEqual(
+            review.comment,
+            "Original review.",
         )
