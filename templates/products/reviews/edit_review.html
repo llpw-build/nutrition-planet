@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Edit Review</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">
+        Update Review
+    </button>
+</form>
+
+<a href="{% url 'product_detail' review.product.id %}">
+    Cancel
+</a>
+
+{% endblock %}

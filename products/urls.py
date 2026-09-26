@@ -15,6 +15,12 @@ urlpatterns = [
     ),
 
     path(
+    "reviews/<int:review_id>/edit/",
+    views.edit_review,
+    name="edit_review",
+    ),
+
+    path(
     "add/",
     views.add_product,
     name="add_product",

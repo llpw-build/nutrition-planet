@@ -1,8 +1,8 @@
 from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth.decorators import user_passes_test
-from .models import Product, Category
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .models import Product, Category, Review
 from .forms import ProductForm, ReviewForm
 
 
@@ -116,6 +116,29 @@ def product_detail(request, product_id):
     return render(
         request,
         "products/product_detail.html",
+        context,
+    )
+
+@login_required
+def edit_review(request, review_id):
+    review = get_object_or_404(
+        Review,
+        id=review_id,
+        user=request.user,
+    )
+
+    form = ReviewForm(
+        instance=review,
+    )
+
+    context = {
+        "form": form,
+        "review": review,
+    }
+
+    return render(
+        request,
+        "products/reviews/edit_review.html",
         context,
     )
 
