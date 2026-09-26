@@ -64,9 +64,7 @@
       <strong>Ingredients:</strong>
       {{ product.ingredients }}
     </p>
-    {% endif %}
-
-    {% if product.stock_quantity > 0 %}
+    {% endif %} {% if product.stock_quantity > 0 %}
 
     <form method="POST" action="{% url 'add_to_bag' product.id %}" class="mt-4">
       {% csrf_token %}
@@ -112,6 +110,17 @@
           <p class="card-text">{{ review.comment }}</p>
 
           <small class="text-muted"> {{ review.date|date:"d M Y" }} </small>
+
+          {% if user == review.user %}
+          <div class="mt-2">
+            <a
+              href="{% url 'edit_review' review.id %}"
+              class="btn btn-sm btn-outline-primary"
+            >
+              Edit Review
+            </a>
+          </div>
+          {% endif %}
         </div>
       </div>
 
