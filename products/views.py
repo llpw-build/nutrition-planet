@@ -162,6 +162,38 @@ def edit_review(request, review_id):
         context,
     )
 
+@login_required
+def delete_review(request, review_id):
+    review = get_object_or_404(
+        Review,
+        id=review_id,
+        user=request.user,
+    )
+
+    if request.method == "POST":
+        product_id = review.product.id
+        review.delete()
+
+        messages.success(
+            request,
+            "Review deleted successfully.",
+        )
+
+        return redirect(
+            "product_detail",
+            product_id=product_id,
+        )
+
+    context = {
+        "review": review,
+    }
+
+    return render(
+        request,
+        "products/reviews/delete_review.html",
+        context,
+    )
+
 
 @user_passes_test(lambda user: user.is_staff)
 def add_product(request):

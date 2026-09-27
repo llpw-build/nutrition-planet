@@ -551,3 +551,102 @@ class ReviewTests(TestCase):
             review.comment,
             "Original review.",
         )
+    def test_review_owner_can_open_delete_confirmation(self):
+        review = Review.objects.create(
+            product=self.product,
+            user=self.user,
+            rating=4,
+            comment="Review to delete.",
+        )
+
+        self.client.login(
+            username="reviewuser",
+            password="testpass123",
+        )
+
+        response = self.client.get(
+            reverse(
+                "delete_review",
+                args=[review.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertEqual(
+            response.context["review"],
+            review,
+        )
+
+    def test_review_owner_can_delete_review(self):
+        review = Review.objects.create(
+            product=self.product,
+            user=self.user,
+            rating=4,
+            comment="Review to delete.",
+        )
+
+        self.client.login(
+            username="reviewuser",
+            password="testpass123",
+        )
+
+        response = self.client.post(
+            reverse(
+                "delete_review",
+                args=[review.id],
+            )
+        )
+
+        self.assertFalse(
+            Review.objects.filter(
+                id=review.id,
+            ).exists()
+        )
+
+        self.assertRedirects(
+            response,
+            reverse(
+                "product_detail",
+                args=[self.product.id],
+            ),
+        )
+
+    def test_non_owner_cannot_delete_review(self):
+        review = Review.objects.create(
+            product=self.product,
+            user=self.user,
+            rating=4,
+            comment="Owner's review.",
+        )
+
+        other_user = get_user_model().objects.create_user(
+            username="otheruser",
+            password="testpass123",
+        )
+
+        self.client.login(
+            username="otheruser",
+            password="testpass123",
+        )
+
+        response = self.client.post(
+            reverse(
+                "delete_review",
+                args=[review.id],
+            )
+        )
+
+        self.assertEqual(
+            response.status_code,
+            404,
+        )
+
+        self.assertTrue(
+            Review.objects.filter(
+                id=review.id,
+            ).exists()
+        )

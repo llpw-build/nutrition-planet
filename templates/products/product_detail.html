@@ -119,6 +119,13 @@
             >
               Edit Review
             </a>
+
+            <a
+              href="{% url 'delete_review' review.id %}"
+              class="btn btn-sm btn-outline-danger"
+            >
+              Delete Review
+            </a>
           </div>
           {% endif %}
         </div>
