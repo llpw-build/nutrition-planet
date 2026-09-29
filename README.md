@@ -64,6 +64,8 @@ The website aims to target users who are late teenagers onwards who have an inte
 - As a user, I want to be able to update my products in my bag so that I can change the amount when needed before checkout.
 - As a user, I want to be able to delete products from my bag for when I change my mind so that I can purchase the right amount.
 - As a user, I want to be able to leave a review so that I can share my opinion with others.
+- As a user, I want to be able to edit my review so that if I change my mind, the capability is there.
+- As a user, I want to be able to delete my review so that if I change my mind, the capability is there.
 - As a user, I want to be able to filter products so I can find the ones I want easily.
 - As a staff user, I want to be able to add products so that we can sell more.
 - As a staff user, I want to be able to edit products so that we can change prices.
@@ -76,7 +78,7 @@ The website aims to target users who are late teenagers onwards who have an inte
 
 The product catalogue provides the user with a clean and simple view utilising boot strap to design the ux with added CSS styling. Every product card has an image and useful information that the users can instantly see.
 
-### Search 
+### Search
 
 A simple search capability was created to help the users find the products they require more easily. This was created also using bootstrap and styled to match the rest of the chosen colour palette.
 
@@ -106,7 +108,7 @@ The checkout page allows the user to enter their information for the order and t
 
 ### Reviews
 
-Basic review capability has been added to the website in order for users to be able to give their opinion on products. The user must be logged in and is then able to select a rating and leave a comment.
+Basic review capability has been added to the website in order for users to be able to give their opinion on products. The user must be logged in and is then able to select a rating and leave a comment. Review owners are able to edit their own reviews and delete them. Non-owners are not able to delete another another user's review review or edit it.
 
 ### Admin CRUD
 
@@ -143,6 +145,7 @@ Depending on whether the user is viewing the project on either a mobile or table
 ## Future Features
 
 If I had not run into as many problems as I did, due to the steep learning curve of implementing Stripe, Cloudinary, Webhook code and so on, I feel I could have achieved much more with this product. Some of the features I would have liked to have included are:
+
 - Blog section
 - Fitness plan section
 - Further styling to the Footer and Navbar
@@ -176,6 +179,7 @@ My Review Model has a many-to-one relationship with Products, as one Product can
 #### UserProfile
 
 My UserProfile has a one to one relationship with User, and I have set up User so that when a User registers for an account, it also creates a UserProfile for them. The UserProfile takes numerous bits of information, such as address, phone number etc.
+
 #### Order
 
 My Order Model has a many to one relationship with my UserProfile, meaning that one UserProfile can have many Orders associated with it. The Order stores the customer's delivery information, email, order total, payment status and Stripe PaymentIntent ID this is a key relationship that at first I struggled with, but now understand this allows the order to be associated with the right Stripe PaymentIntent ID.
@@ -184,10 +188,10 @@ My Order Model has a many to one relationship with my UserProfile, meaning that 
 
 My OrderLineItem Model has a many to one relationship with Product and also a many to one relationship with my Order Model. This is a key relationship for my project, as we use the OrderLineItem to represent the individual Products and their quantities within an Order. Each OrderLineItem calculates its own total by multiplying the Product price by its quantity. The Order can then calculate its overall total using all of the OrderLineItems associated with it in order to avoid any errors within the Order total.
 
-
 ### Model Relationships
 
 As mentioned above, my project has many Model Relationships which I will now outline below:
+
 - User and Userprofile have one to one relationship. Every User has only one Profile.
 - UserProfile and Order have a many to one relationship. One UserProfile may have many Orders.
 - Brand and Product have a many to one relationship. One Brand may had many Products.
@@ -202,11 +206,11 @@ As mentioned above, my project has many Model Relationships which I will now out
 HTML
 CSS
 Django
-Python 
+Python
 Javascript
 Bootstrap
 SQLite
-PostgreSQL 
+PostgreSQL
 Stripe
 Github
 Cloudinary
@@ -224,49 +228,56 @@ On django, you will see that I have added many tests to ensure the full django p
 
 ### Deployment Testing
 
-While deploying my project to Heroku, I ran into numerous issues, mainly due to images not loading as I had not yet utilised Cloudinary, getting frequent server errors due to incorrect secret key and no Heroku PostgreSQL database migrations applied (no data). All of these have since been resolved. 
+While deploying my project to Heroku, I ran into numerous issues, mainly due to images not loading as I had not yet utilised Cloudinary, getting frequent server errors due to incorrect secret key and no Heroku PostgreSQL database migrations applied (no data). All of these have since been resolved.
 
 ### Feature Testing
 
-| Feature | Test | Expected Result | Actual Result | Pass/Fail |
-| --- | --- | --- | --- | --- |
-| Navbar link | Select a Navbar link | Correct page displayed | Correct page displayed | Pass |
-| "Shop Products" button | Select "Shop Products" | Product catalogue displayed | Product catalogue displayed | Pass |
-| Registration | Register a new account | Account and UserProfile created and user logged in | Account and UserProfile created and user logged in | Pass |
-| Register restriction | Visit register page while already logged in | Registration form cannot be accessed | User redirected with appropriate message | Pass |
-| Login restriction | Visit login page while already logged in | Login form cannot be accessed | User redirected away from login page | Pass |
-| Logout | Logout from an authenticated account | User successfully logged out | User successfully logged out | Pass |
-| Product catalogue | Open product catalogue | Products and images displayed | Products and images displayed | Pass |
-| Product detail page | Select a product | Correct product information displayed | Correct product information displayed | Pass |
-| Search | Search for existing product | Matching product displayed | Matching product displayed | Pass |
-| Invalid search | Search for non-existent product | No-results feedback displayed | No-results feedback displayed | Pass |
-| Category filter | Select a category | Products from selected category displayed | Correct products displayed | Pass |
-| Price sorting | Sort products low-high and high-low | Products displayed in correct order | Products displayed in correct order | Pass |
-| Combined search/filter/sort | Combine catalogue options | Search, filtering and sorting work together | Correct combined results displayed | Pass |
-| Add to bag | Add valid quantity | Correct product and quantity added | Correct product and quantity added | Pass |
-| Add same product again | Add more of a product already in bag | Quantity updated correctly | Quantity updated correctly | Pass |
-| Update bag | Change product quantity in bag | Quantity and totals recalculated | Quantity and totals recalculated | Pass |
-| Multiple products | Add multiple different products | Products stored and total calculated | Products and total displayed correctly | Pass |
-| Remove from bag | Remove a product | Product removed and total recalculated | Product removed and total recalculated | Pass |
-| Stock validation | Add more than available stock | Request rejected | Request rejected | Pass |
-| Existing quantity stock validation | Existing bag quantity plus new quantity exceeds stock | Request rejected | Request rejected | Pass |
-| Out-of-stock product | Attempt to purchase product with no stock | Purchase prevented | Purchase prevented | Pass |
-| Save details to profile | Save profile information | Details stored and displayed | Details stored and displayed correctly | Pass |
-| Review | Logged-in user submits review | Review displayed on product page | Review displayed on product page | Pass |
-| Review authentication | Attempt review functionality while logged out | Access prevented | Access prevented | Pass |
-| Staff permissions | Normal user attempts staff-only functionality | Access denied | Access denied | Pass |
-| Checkout | Proceed through checkout | Checkout form and Stripe payment interface displayed | Checkout loaded correctly | Pass |
-| Successful Stripe payment | Complete successful Stripe test payment | Payment accepted and success feedback displayed | Payment accepted and success feedback displayed | Pass |
-| Order creation | Complete successful checkout | Order stored correctly | Order stored correctly | Pass |
-| Order history | View profile after purchase | New order displayed in order history | New order displayed correctly | Pass |
-| Payment status | Complete successful payment | Order marked as paid | Order marked as paid | Pass |
-| Stock after purchase | Complete successful purchase | Purchased stock decreases | Stock decreased correctly | Pass |
-| Bag after purchase | Complete successful purchase | Bag cleared | Bag cleared correctly | Pass |
-| Declined Stripe payment | Use declined Stripe test payment | Payment rejected and failure feedback displayed | Payment rejected and failure feedback displayed | Pass |
-| Responsive layout | Test desktop, tablet and mobile sizes | Website remains usable and responsive | Layout displayed correctly at tested sizes | Pass |
-| Mobile Navbar | Test navigation at mobile size | Responsive navigation available | Hamburger navigation displayed and worked | Pass |
-| Static and media files | Browse deployed website | CSS, JavaScript and images load correctly | Assets loaded correctly | Pass |
-| Internal navigation | Test main website links | Links lead to correct pages without errors | Links worked correctly | Pass |
+| Feature                            | Test                                                      | Expected Result                                                 | Actual Result                                                 | Pass/Fail |
+| ---------------------------------- | --------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------- | --------- |
+| Navbar link                        | Select a Navbar link                                      | Correct page displayed                                          | Correct page displayed                                        | Pass      |
+| "Shop Products" button             | Select "Shop Products"                                    | Product catalogue displayed                                     | Product catalogue displayed                                   | Pass      |
+| Registration                       | Register a new account                                    | Account and UserProfile created and user logged in              | Account and UserProfile created and user logged in            | Pass      |
+| Register restriction               | Visit register page while already logged in               | Registration form cannot be accessed                            | User redirected with appropriate message                      | Pass      |
+| Login restriction                  | Visit login page while already logged in                  | Login form cannot be accessed                                   | User redirected away from login page                          | Pass      |
+| Logout                             | Logout from an authenticated account                      | User successfully logged out                                    | User successfully logged out                                  | Pass      |
+| Product catalogue                  | Open product catalogue                                    | Products and images displayed                                   | Products and images displayed                                 | Pass      |
+| Product detail page                | Select a product                                          | Correct product information displayed                           | Correct product information displayed                         | Pass      |
+| Search                             | Search for existing product                               | Matching product displayed                                      | Matching product displayed                                    | Pass      |
+| Invalid search                     | Search for non-existent product                           | No-results feedback displayed                                   | No-results feedback displayed                                 | Pass      |
+| Category filter                    | Select a category                                         | Products from selected category displayed                       | Correct products displayed                                    | Pass      |
+| Price sorting                      | Sort products low-high and high-low                       | Products displayed in correct order                             | Products displayed in correct order                           | Pass      |
+| Combined search/filter/sort        | Combine catalogue options                                 | Search, filtering and sorting work together                     | Correct combined results displayed                            | Pass      |
+| Add to bag                         | Add valid quantity                                        | Correct product and quantity added                              | Correct product and quantity added                            | Pass      |
+| Add same product again             | Add more of a product already in bag                      | Quantity updated correctly                                      | Quantity updated correctly                                    | Pass      |
+| Update bag                         | Change product quantity in bag                            | Quantity and totals recalculated                                | Quantity and totals recalculated                              | Pass      |
+| Multiple products                  | Add multiple different products                           | Products stored and total calculated                            | Products and total displayed correctly                        | Pass      |
+| Remove from bag                    | Remove a product                                          | Product removed and total recalculated                          | Product removed and total recalculated                        | Pass      |
+| Stock validation                   | Add more than available stock                             | Request rejected                                                | Request rejected                                              | Pass      |
+| Existing quantity stock validation | Existing bag quantity plus new quantity exceeds stock     | Request rejected                                                | Request rejected                                              | Pass      |
+| Out-of-stock product               | Attempt to purchase product with no stock                 | Purchase prevented                                              | Purchase prevented                                            | Pass      |
+| Save details to profile            | Save profile information                                  | Details stored and displayed                                    | Details stored and displayed correctly                        | Pass      |
+| Review                             | Logged-in user submits review                             | Review displayed on product page                                | Review displayed on product page                              | Pass      |
+| Review authentication              | Attempt review functionality while logged out             | Access prevented                                                | Access prevented                                              | Pass      |
+| Edit review                        | Owner edits the rating and comment                 | Review updated without creating a duplicate         | Existing review updated as expected                             | Pass      |
+| Edit review ownership              | Another user visits the review edit URL          | Access is denied to the review               | A 404 response was shown | Pass      |
+| Delete confirmation                | Owner selects Delete Review                        | Confirmation page is shown before deletion                  | Confirmation page displayed correctly                         | Pass      |
+| Cancel review deletion             | Owner selects Cancel on the confirmation page      | It returns to the product without deleting the review         | Review remained available                                     | Pass      |
+| Delete review                      | Review owner selects deletion                            | Review is deleted and user is sent to the correct product | Review deleted and redirect completed as expected               | Pass      |
+| Delete review ownership            | Another user visits or enters the delete URL    | Access is denied and the review remains the same         | A 404 response is displayed and the review remains the same | Pass      |
+| Review controls                    | View reviews as the owner and as another user             | Edit and Delete buttons appear only for the  owner        | Controls appeared only for the owner                          | Pass      |
+| Staff permissions                  | Normal user attempts staff-only functionality             | Access denied                                                   | Access denied                                                 | Pass      |
+| Checkout                           | Proceed through checkout                                  | Checkout form and Stripe payment interface displayed            | Checkout loaded correctly                                     | Pass      |
+| Successful Stripe payment          | Complete successful Stripe test payment                   | Payment accepted and success feedback displayed                 | Payment accepted and success feedback displayed               | Pass      |
+| Order creation                     | Complete successful checkout                              | Order stored correctly                                          | Order stored correctly                                        | Pass      |
+| Order history                      | View profile after purchase                               | New order displayed in order history                            | New order displayed correctly                                 | Pass      |
+| Payment status                     | Complete successful payment                               | Order marked as paid                                            | Order marked as paid                                          | Pass      |
+| Stock after purchase               | Complete successful purchase                              | Purchased stock decreases                                       | Stock decreased correctly                                     | Pass      |
+| Bag after purchase                 | Complete successful purchase                              | Bag cleared                                                     | Bag cleared correctly                                         | Pass      |
+| Declined Stripe payment            | Use declined Stripe test payment                          | Payment rejected and failure feedback displayed                 | Payment rejected and failure feedback displayed               | Pass      |
+| Responsive layout                  | Test desktop, tablet and mobile sizes                     | Website remains usable and responsive                           | Layout displayed correctly at tested sizes                    | Pass      |
+| Mobile Navbar                      | Test navigation at mobile size                            | Responsive navigation available                                 | Hamburger navigation displayed and worked                     | Pass      |
+| Static and media files             | Browse deployed website                                   | CSS, JavaScript and images load correctly                       | Assets loaded correctly                                       | Pass      |
+| Internal navigation                | Test main website links                                   | Links lead to correct pages without errors                      | Links worked correctly                                        | Pass      |
 
 ## Bugs
 
@@ -423,7 +434,6 @@ The code for Planet Nutrition was written by myself while using the course mater
 - [Bootstrap Documentation](https://getbootstrap.com/docs/) - Used when creating the responsive layout, Navbar, product cards, buttons and other UI elements.
 - [Cloudinary Documentation](https://cloudinary.com/documentation) - Used when configuring Cloudinary for image and media storage.
 - [Heroku Documentation](https://devcenter.heroku.com/) - Used as a reference when deploying the application to Heroku.
-
 
 ### Images
 
