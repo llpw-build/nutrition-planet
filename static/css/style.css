@@ -149,13 +149,23 @@ footer p {
 
 .footer-link {
     color: var(--pn-blue);
+    display: inline-block;
     text-decoration: none;
     font-weight: 500;
+    transition: color 0.2s ease;
 }
 
 .footer-link:hover {
-    color: var(--pn-white);
+    color: #ffffff;
     text-decoration: underline;
+    text-underline-offset: 0.25rem;
+}
+
+.footer-link:focus-visible {
+    color: #ffffff;
+    border-radius: 2px;
+    outline: 2px solid var(--pn-blue);
+    outline-offset: 4px;
 }
 
 .home-logo {
