@@ -1,20 +1,49 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4 p-md-5">
+          <h1>Order Successful!</h1>
+          <p>Thank you for shopping with Planet Nutrition!</p>
 
-{% for item in order.lineitems.all %}
+          <p>
+            <strong>Order number:</strong>
+            {{ order.id }}
+          </p>
 
-    <p> 
-        {{ item.product }}
-        × {{ item.quantity }}
-        = £{{ item.lineitem_total }}
+          <h2>Order Summary</h2>
 
-        <strong>Order number:</strong>
-        {{ order.id }}
-    </p>
+          <div class="table-responsive">
+            <table class="table align-middle">
+              <thead>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
 
-{% endfor %}
+              <tbody>
+                {% for item in order.lineitems.all %}
+                <tr>
+                  <td>{{item.product}}</td>
+                  <td>{{item.quantity}}</td>
+                  <td>£{{item.lineitem_total}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
 
-£{{ order.order_total }}
+          <p class="text-end fs-4">
+            <strong> Order total: £{{order.order_total}} </strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
