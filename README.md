@@ -10,19 +10,19 @@
 
 Planet Nutrition is a sports equipment and supplements e-commerce website, that is targeted at users who are late teenagers onwards who have an interest in sporting goods. The website aims to be a one stop shop for all sporting needs, providing a clean and hassle-free ordering system designed with simplicity in mind.
 
-## Live Website and Github
+## Live Website and GitHub
 
 [Planet Nutrition](https://nutrition-planet-e0408406543d.herokuapp.com/)
-[Github](https://github.com/llpw-build/nutrition-planet)
+[GitHub](https://github.com/llpw-build/nutrition-planet)
 
 ## Project goals
 
 ### Site Owner Goals
 
-- Have an easy to user e-commerce website that customers can easily use to purchase sporting goods and supplements.
+- Have an easy-to-use e-commerce website where customers can easily purchase sporting goods and supplements.
 - Allow customers to search, browse and filter the products on the website.
 - Utilise Stripe for secure payments.
-- Encourage footfall and user to then create accounts and purchase.
+- Encourage visitors to create accounts and purchase products.
 - Allow staff to be able to manage the products on the website.
 
 ### User Goals
@@ -45,7 +45,7 @@ Planet Nutrition is a sports equipment and supplements e-commerce website, that 
 7. Enters delivery and payment information.
 8. Stripe processes all of the information.
 9. Confirmation or rejection.
-10. Order is saved to the user profile.
+10. Order is saved to the user profile if the user is logged in.
 
 ## Target Customer
 
@@ -76,11 +76,11 @@ The website aims to target users who are late teenagers onwards who have an inte
 
 ### Product Catalogue
 
-The product catalogue provides the user with a clean and simple view utilising boot strap to design the ux with added CSS styling. Every product card has an image and useful information that the users can instantly see.
+The product catalogue provides the user with a clean and simple layout. I used Bootstrap alongside my own custom CSS styling. Every product card has an image and useful information that the users can instantly see.
 
 ### Search
 
-A simple search capability was created to help the users find the products they require more easily. This was created also using bootstrap and styled to match the rest of the chosen colour palette.
+A simple search capability was created to help the users find the products they require more easily. This was created also using Bootstrap and styled to match the rest of the chosen colour palette.
 
 ### Category filtering and sorting
 
@@ -88,7 +88,7 @@ Added category and sorting capabilities to the product catalogue to improve user
 
 ### Product Details pages
 
-Every product has a product detail page, which provides more indepth information about the product and also the ability to choose an amount and add the product to the users bag ready for checkout.
+Every product has its own detail page, which provides more in-depth information about the product and also the ability to choose an amount and add the product to their bag ready for checkout.
 
 ### Authentication/register/login
 
@@ -104,11 +104,11 @@ The shopping bag allows the user to store items and their quantity ready for pur
 
 ### Checkout/ Stripe Payments
 
-The checkout page allows the user to enter their information for the order and then also utilises stripe for any transactions that are carried out. A successful order provides the user with a success page, while a failed order will prompt the user as to what has gone wrong.
+The checkout page allows the user to enter their information for the order and then also utilises Stripe for any transactions that are carried out. A successful order provides the user with a success page, while a failed order will prompt the user as to what has gone wrong.
 
 ### Reviews
 
-Review capability has been added to the website in order for users to be able to give their opinion on products. The user must be logged in and is then able to select a rating and leave a comment. Review owners are able to edit their own reviews and delete them. Non-owners are not able to delete another another user's review or edit it.
+The review function allows users to share their opinions on products. Users must be logged in before they can select a rating and leave a comment. Review owners can edit or delete their own reviews, while other users cannot access these actions unless its their own review.
 
 ### Admin CRUD
 
@@ -120,11 +120,11 @@ For my project, I have chosen one of my favorite colourways which is baby blue a
 
 ### Bootstrap Responsive Layout
 
-Bootstrap has been been used through the project in order to help design the site as "mobile first" and allow easy customisation throughout. I have utilised Boostrap's classes where possible to create a responsive grid system for the product cards, but allowing them to take up more space/ less space depending on the screen size.
+Bootstrap has been used through the project in order to design the project mobile-first . I have utilised Bootstrap's classes where possible to create a responsive grid system for the product cards, by allowing them to take up more space/ less space depending on the screen size.
 
 ### Navbar
 
-A traditional Navbar has been added to the project, with links to separate URLs and a logo that when clicked, redirects the user to home. Due to authentication the user will see different links whether they are logged in or out. The Navbar is also responsive and on smaller screens become a hamburger style menu.
+A traditional Navbar has been added to the project, with links to main areas of the website. Due to authentication the user will see different links whether they are logged in or out. The Navbar is also responsive and on smaller screens become a hamburger-style menu.
 
 ### Homepage
 
@@ -132,7 +132,7 @@ The homepage has the company's logo to grab the user's attention, a short welcom
 
 ### Product Cards
 
-Within the Product Catalogue, I used bootstrap to create product cards for a clean view of a selection of products that is responsive depending on what screen size the website is being viewed on. These cards are created using information from the Model; the information is name, brand, price, stock availability etc. Clicking on the product card takes the user to the Product Detail page.
+Within the Product Catalogue, I used Bootstrap to create product cards for a clean view of a selection of products that is responsive depending on what screen size the website is being viewed on. These cards are created using information from the Model; the information is name, brand, price, stock availability etc. Clicking on the product card takes the user to the Product Detail page.
 
 ### Mobile and tablet responsiveness
 
@@ -174,7 +174,7 @@ My Product Model has a many-to-one relationship with Brand and Category, meaning
 
 #### Review
 
-My Review Model has a many-to-one relationship with Products, as one Product can have many Reviews. It also has a many-to-one relationship with Users, as one User can create multiple Reviews. When saved this is then displayed to the Product Detail page.
+My Review Model has a many-to-one relationship with Products, as one Product can have many Reviews. It also has a many-to-one relationship with Users, as one User can create multiple Reviews. When saved this is then displayed on the Product Detail page.
 
 #### UserProfile
 
@@ -192,14 +192,14 @@ My OrderLineItem Model has a many to one relationship with Product and also a ma
 
 As mentioned above, my project has many Model Relationships which I will now outline below:
 
-- User and Userprofile have one to one relationship. Every User has only one Profile.
-- UserProfile and Order have a many to one relationship. One UserProfile may have many Orders.
-- Brand and Product have a many to one relationship. One Brand may had many Products.
-- Category and Product have a many to one relationship. One Category may have many Products.
+- User and UserProfile have one to one relationship. Every User has only one Profile.
+- UserProfile and Order have a one to many relationship. One UserProfile may have many Orders.
+- Brand and Product have a one to many relationship. One Brand may had many Products.
+- Category and Product have a one to many relationship. One Category may have many Products.
 - Product and Review have a one to many relationship. One Product may have many Reviews.
 - User and Review have a one to many relationship. One User may have many Reviews.
 - Order and OrderLineItem have a one to many relationship. One Order may have many OrderLineItems.
-- Product and OrderlineItem have a one many relationship. One Product may belong to many OrderLineItems.
+- Product and OrderlineItem have a one many relationship. One Product may appear in many OrderLineItems.
 
 ### Technologies used
 
@@ -207,12 +207,12 @@ HTML
 CSS
 Django
 Python
-Javascript
+JavaScript
 Bootstrap
 SQLite
 PostgreSQL
 Stripe
-Github
+GitHub
 Cloudinary
 Heroku
 
@@ -260,7 +260,7 @@ The assessor feedback identified incomplete CRUD functionality for reviews and b
 | Review controls were missing from the interface         | Added Edit and Delete buttons that are shown only to the review owner                                              | Template condition and manual owner/non-owner testing and commits         |
 | Review login interrupted the product journey            | Added a `next` parameter so the user returns to the original product after logging in, rather than the home screen | Manual login-redirect test                                                |
 | Footer social links were broken                         | Replaced placeholder links with valid external destinations opening correctly and safely in a new tab              | Manual social-link testing                                                |
-| Console and frontend behaviour required further testing | Completed a deployed-site Console and Network audit across the main user journeys checking frequently              | No red application errors or failed application requests were found       |
+| Console and frontend behaviour required further testing | Completed a deployed-site Console and Network audit across the main user journeys              | No red application errors or failed application requests were found       |
 | Automated TDD evidence required improvement             | Added review CRUD and ownership tests and highlighted their failing-to-passing development process                 | 31 passing tests and review-related Git history                           |
 
 ### Feature Testing
@@ -326,9 +326,9 @@ The assessor feedback identified incomplete CRUD functionality for reviews and b
 
 The product fixture failed to load into the deployed PostgreSQL database because of a file encoding issue. I resolved this by recreating the fixture with Django's dumpdata command, committing the corrected file and then loading the data into the production database using loaddata.
 
-Products could be added beyond available stock, so I resolved it by checking the current quantity against the products stock quantity before it could be added to the bag. I also accounted for the products already in the bag by using different quantity totals.
+Products could be added beyond available stock, so I resolved it by checking the current quantity against the product's stock quantity before it could be added to the bag. I also accounted for the products already in the bag by using different quantity totals.
 
-Cloudinary when installed caused my local tests in django to fail. This was due to using Cloudinary in the production environment but also needing to use local file storage for my local server tests. Resolved this by utilising a if statement within settings.
+Cloudinary when installed caused my local tests in Django to fail. This was due to using Cloudinary in the production environment but also needing to use local file storage for my local server tests. Resolved this by utilising an if statement within settings.
 
 Heroku was missing all of my database tables when I deployed. I then remembered I had to migrate them to the Heroku PostgreSQL database and then that resolved the issue.
 
@@ -340,7 +340,7 @@ Again a similar issue I had was that my Cloudinary key was incorrect, so I was n
 
 Bug where card images are not uniform could not be resolved. Tried to override CSS and on the template but could not get the images to be uniform.
 
-Following a declined Stripe payment, the checkout page may need to be refreshed before another payment attempt can be made. The declined payment is handled correctly and the user receives payment failure feedback, but refreshing the page is at the moment, required before retrying.
+Following a declined Stripe payment, the checkout page may need to be refreshed before another payment attempt can be made. The declined payment is handled correctly and the user receives payment failure feedback, but refreshing the page is at the moment required before retrying.
 
 ## Security
 
@@ -350,7 +350,7 @@ Configuration values are stored as environment variables utilising .env and giti
 
 ### Secret Keys
 
-The same can be said for secret keys, as they are similarly not committed to Django for security reasons.
+The same can be said for secret keys, as they are similarly not committed to GitHub for security reasons. They are instead stored as environment variables.
 
 ### DEBUG
 
@@ -358,7 +358,7 @@ DEBUG as required is set to False and disabled to stop users seeing debugging in
 
 ### Authentication and Authorisation
 
-Django authentication has been utilised throughout the project. Certain functionality, such as leaving reviews and accessing a User Profile, requires the user to be authenticated. For resubmission, I also expanded this to cover editing and review and deleting a review.
+Django authentication has been utilised throughout the project. Certain functionality, such as leaving reviews and accessing a User Profile, requires the user to be logged in. For resubmission, I also expanded this to cover editing a review and deleting a review by using ownership checks.
 
 ### CSRF Protection
 
@@ -366,7 +366,7 @@ CSRF protection has been utilised on POST forms.
 
 ### Stripe Security
 
-Stripe Keys stored securely using config vars and .env. Stripe and Webhook events are verified using Stripe Signature and Webhook secret before the event data can be utilised by django.
+Stripe keys are stored securely using Heroku Config Vars and the .env file. Webhook events are verified using Stripe signature and webhook secret before the event data can be utilised by django.
 
 ### Staff Permissions
 
@@ -376,19 +376,19 @@ Admin actions have been limited to staff only. Normal users cannot access these.
 
 ### Local Development
 
-For local development I cloned my repository using VScode. I then also created a virtual environment in my terminal to be able to install packages. I created a requirements.txt to track what packages I used. I used .env to protect my important keys. I ran migrations to create the database tables and also ran the local Django development server.
+For local development I cloned my repository and opened it using VS Code. I then also created a virtual environment in my terminal to be able to install packages. I created a requirements.txt to track what packages I used. I used .env to protect my important configuration values. I ran migrations to create the database tables and also ran the local Django development server.
 
 ### Heroku Deployment
 
-For Heroku deployment, I had to link my GitHub repository to the Heroku app, then set my Config Vars and added a PostgreSQL database. I then ran migrations from the Heroku terminal and checked the deployed site after deployment to ensure everything was working correctly.
+For Heroku deployment, I had to link my GitHub repository to the Heroku app, then set my Config Vars and add a PostgreSQL database. I then ran migrations from the Heroku terminal and checked the deployed site after deployment to ensure everything was working correctly.
 
 ### Environment Variables / Config Vars
 
-Environment variables were used throughout my project locally and I utilised a .env file and also a gitignore file to avoid any keys being revealed. Then for deployment, I utilised Heroku's config vars in order to protect any keys. These included ones for Django, Stripe and Cloudinary.
+During local development, I stored sensitive values in a .env file and excluded it from version control using .gitignore. In production, the Django, Stripe and Cloudinary values are stored securely using Heroku Config Vars as mentioned above.
 
 ### PostgreSQL
 
-SQlite was used for convenience during local development and during deployment I used PostgreSQL. Once this was added to Heroku, I ran migrations.
+SQLite was used for convenience during local development and during deployment I used PostgreSQL. Once this was added to Heroku, I ran the required migrations.
 
 ### Static Files / WhiteNoise
 
@@ -418,7 +418,7 @@ Throughout my project I regularly used git as you will see from my work history 
 
 ### GitHub
 
-I hosted my repository on Github and pushed my commits to it throughout.
+I hosted my repository on GitHub and pushed my commits to it throughout.
 
 ### Validation Testing
 
