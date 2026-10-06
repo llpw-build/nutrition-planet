@@ -123,3 +123,53 @@ class CheckoutTests(TestCase):
             "bag",
             session,
         )
+
+    @patch("checkout.views.stripe.PaymentIntent.modify")
+    def test_checkout_retry_reuses_existing_order(self, mock_modify):
+
+        checkout_data = {
+            "full_name": "Test User",
+            "email": "test@example.com",
+            "phone_number": "07700900123",
+            "street_address": "1 Test Street",
+            "town_or_city": "Newport",
+            "postcode": "NP20 1AA",
+            "country": "United Kingdom",
+            "payment_intent_id": "pi_retry_test",
+        }
+
+        first_response = self.client.post(
+            reverse("checkout"),
+            checkout_data,
+        )
+
+        second_response = self.client.post(
+            reverse("checkout"),
+            checkout_data,
+        )
+
+        self.assertEqual(
+            first_response.status_code,
+            200,
+        )
+
+        self.assertEqual(
+            second_response.status_code,
+            200,
+        )
+
+        self.assertEqual(
+            Order.objects.count(),
+            1,
+        )
+
+        self.assertEqual(
+            OrderLineItem.objects.count(),
+            1,
+        )
+
+        self.assertEqual(
+            first_response.json()["order_id"],
+            second_response.json()["order_id"],
+        )
+
