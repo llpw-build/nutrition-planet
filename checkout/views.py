@@ -35,12 +35,23 @@ def checkout(request):
 
         if form.is_valid():
 
-            order = form.save(
-                commit=False,
-            )
-
             payment_intent_id = request.POST.get(
                 "payment_intent_id"
+            )
+
+            existing_order = Order.objects.filter(
+                stripe_payment_intent_id=payment_intent_id,
+            ).first()
+
+            if existing_order:
+                return JsonResponse(
+                    {
+                        "order_id": existing_order.id,
+                    }
+                )
+
+            order = form.save(
+                commit=False,
             )
 
             order.stripe_payment_intent_id = (
