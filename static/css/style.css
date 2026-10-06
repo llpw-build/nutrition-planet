@@ -73,8 +73,8 @@ main.container {
 }
 
 .btn-outline-primary {
-    color: var(--pn-blue);
-    border-color: var(--pn-blue);
+    color: #17678f;
+    border-color: #2685b5;
     background-color: transparent;
 }
 
