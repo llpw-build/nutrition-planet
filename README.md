@@ -226,23 +226,24 @@ I have carried out "smoke tests" numerous times, before deployment, during deplo
 
 I used Django's automated testing throughout the project, which creates a temporary test database so that the tests do not affect any of the real data. The tests cover areas including products, user authentication, checkout, stock behaviour and reviews.
 
-For the resubmission, I expanded the automated tests to cover the missing review CRUD functionality and make sure the ownership protection was working correctly. The final test run contained 31 tests and they all passed. Django's system check also completed without finding any issues.
+For the resubmission, I expanded the automated tests to cover the missing review CRUD functionality and make sure the ownership protection was working correctly. I also added a regression test for the checkout retry error. This submits the checkout form twice using the same Stripe PaymentIntent ID and confirms that both requests succeed, only one order and line item are created, and both responses return the same order ID. A separate form test confirms that the username, email and first-name autocomplete attributes are present. The final test run contained 33 tests and they all passed. Django's system check also completed without finding any issues.
 
-### Review CRUD Test-Driven Development
+### Resubmission Test-Driven Development
 
-For the resubmission, I used automated tests while adding the missing edit and delete functionality for reviews. Django creates a temporary test database when the tests run, which allowed me to test updating, deleting and review ownership without affecting any of the real project data.
+For the resubmission, I used automated tests while adding the missing edit and delete functionality for reviews. I also used automated tests for protecting the review ownership and ensuring that someone else was not able to either edit or delete a user's review. In another instance, I also used a regression test to reproduce my checkout bug and used it to confirm my solution fixed the bug. Django creates a temporary test database when the tests run, which allowed me to test updating, deleting and review ownership without affecting any of the real project data.
 
 The review test suite now has nine tests. These cover creating reviews, stopping logged-out users from submitting them, displaying the newest reviews first, editing and deleting reviews, and making sure another user cannot change or delete a review that does not belong to them.
 
 Some of the tests failed as expected before I completed the functionality:
 
-| Test | Initial result | Change made | Final result |
-| --- | --- | --- | --- |
-| Owner opens edit page | The view did not return a response and the edit template did not exist | Added the edit URL, ownership check, form and template | The owner received a 200 response and the correct review was loaded |
-| Owner updates review | The saved rating remained at 4 instead of changing to 5 | Bound the form to the selected review using `instance=review` | The existing review was updated and the test passed |
-| Non-owner updates review | Another user's access needed to be prevented | Retrieved the review using its ID and `user=request.user` | The non-owner received a 404 and the review stayed unchanged |
-| Owner deletes review | The review still existed after the deletion request | Added POST deletion handling and redirected back to the product | The review was deleted and the test passed |
-| Non-owner deletes review | Another user's deletion access needed to be prevented | Used the ownership-filtered review query in the delete view | The non-owner received a 404 and the review stayed unchanged |
+| Test                     | Initial result                                                                                         | Change made                                                                                                         | Final result                                                                                                    |
+| ------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Owner opens edit page    | The view did not return a response and the edit template did not exist                                 | Added the edit URL, ownership check, form and template                                                              | The owner received a 200 response and the correct review was loaded                                             |
+| Owner updates review     | The saved rating remained at 4 instead of changing to 5                                                | Bound the form to the selected review using `instance=review`                                                       | The existing review was updated and the test passed                                                             |
+| Non-owner updates review | Another user's access needed to be prevented                                                           | Retrieved the review using its ID and `user=request.user`                                                           | The non-owner received a 404 and the review stayed unchanged                                                    |
+| Owner deletes review     | The review still existed after the deletion request                                                    | Added POST deletion handling and redirected back to the product                                                     | The review was deleted and the test passed                                                                      |
+| Non-owner deletes review | Another user's deletion access needed to be prevented                                                  | Used the ownership-filtered review query in the delete view                                                         | The non-owner received a 404 and the review stayed unchanged                                                    |
+| Checkout payment retry   | A second checkout submission using the same PaymentIntent ID caused a unique-constraint database error | Checked for an existing order with the PaymentIntent ID and returned its order ID instead of creating another order | Both requests returned 200, only one order and line item existed, and both responses returned the same order ID |
 
 ### Deployment Testing
 
@@ -260,7 +261,7 @@ The assessor feedback identified incomplete CRUD functionality for reviews and b
 | Review controls were missing from the interface         | Added Edit and Delete buttons that are shown only to the review owner                                              | Template condition and manual owner/non-owner testing and commits         |
 | Review login interrupted the product journey            | Added a `next` parameter so the user returns to the original product after logging in, rather than the home screen | Manual login-redirect test                                                |
 | Footer social links were broken                         | Replaced placeholder links with valid external destinations opening correctly and safely in a new tab              | Manual social-link testing                                                |
-| Console and frontend behaviour required further testing | Completed a deployed-site Console and Network audit across the main user journeys              | No red application errors or failed application requests were found       |
+| Console and frontend behaviour required further testing | Completed a deployed-site Console and Network audit across the main user journeys                                  | No red application errors or failed application requests were found       |
 | Automated TDD evidence required improvement             | Added review CRUD and ownership tests and highlighted their failing-to-passing development process                 | 31 passing tests and review-related Git history                           |
 
 ### Feature Testing
@@ -336,11 +337,11 @@ As mentioned above, I often run into a Stripe checkout error due to me having th
 
 Again a similar issue I had was that my Cloudinary key was incorrect, so I was not able to upload images how I wanted to. This again was resolved by following the traceback and resolving the error in my key.
 
-### Known Bugs (Not fixed)
+### Resolved Bugs
 
-Bug where card images are not uniform could not be resolved. Tried to override CSS and on the template but could not get the images to be uniform.
+Product card images previously appeared at inconsistent sizes. In order to fix this, I added a consistent image wrapper and also change CSS instead to object-fit: contain as this preserves the image without it stretching or cropping like the issues I had before. After the fix, I manually checked the local site and deployed site to confirm they were uniform.
 
-Following a declined Stripe payment, the checkout page may need to be refreshed before another payment attempt can be made. The declined payment is handled correctly and the user receives payment failure feedback, but refreshing the page is at the moment required before retrying.
+Declined payments previously had to be refreshed in order to be able to try again. This was due to the same unique Stripe PaymentIntent ID was being used to create a seperate order. This then caused a database error. I added a regression test to prove the error and then made my view reuse the same existing order ID. I have tested this extensively now and there are no Console or Network errors.
 
 ## Security
 
