@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from .forms import userRegisterForm
 
 # Create your tests here.
 
@@ -14,6 +15,13 @@ class RegisterTests(TestCase):
         self.assertTemplateUsed(response, "registration/register.html",)
         self.assertContains(response, "Register",)
 
+    def test_registration_page_contains_autocomplete(self):
+
+        form = userRegisterForm()
+
+        self.assertEqual(form.fields["username"].widget.attrs["autocomplete"], "username")
+        self.assertEqual(form.fields["email"].widget.attrs["autocomplete"], "email")
+        self.assertEqual(form.fields["first_name"].widget.attrs["autocomplete"], "given-name")
 
 class UserProfileTests(TestCase):
     def test_logged_in_user_can_access_profile(self):

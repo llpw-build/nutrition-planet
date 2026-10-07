@@ -8,7 +8,12 @@ class userRegisterForm (UserCreationForm):
     first_name = forms.CharField(max_length=25, required=True)
     last_name = forms.CharField(max_length=30, required=True)
 
-
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["username"].widget.attrs["autocomplete"] = "username"
+        self.fields["email"].widget.attrs["autocomplete"] = "email"
+        self.fields["first_name"].widget.attrs["autocomplete"] = "given-name"
+    
     class Meta:
         model = User
 
