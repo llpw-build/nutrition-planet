@@ -1,165 +1,232 @@
-{% extends "base.html" %} {% load static %} {% block content %}
+{% extends "base.html" %}
+{% load static %}
 
-<div class="row">
-  <div class="col-12 col-lg-4">
-    {% if product.image %}
-    <img
-      class="img-fluid"
-      src="{{ product.image.url }}"
-      alt="{{ product.name }}"
-    />
-    {% else %}
-    <img
-      class="img-fluid"
-      src="{% static 'images/no-image.jpg' %}"
-      alt="No image available"
-    />
-    {% endif %}
-  </div>
+{% block content %}
 
-  <div class="col-12 col-lg-8">
-    <h1>{{ product.name }}</h1>
-
-    <p class="fs-3 fw-bold mb-3">£{{ product.price }}</p>
-
-    {% if product.description %}
-    <p class="text-muted mt-2 mb-4">
-      <strong>Description:</strong>
-      {{ product.description }}
-    </p>
-    {% endif %}
-
-    <p class="text-muted mb-1">
-      <strong>Brand:</strong>
-      {{ product.brand }}
-    </p>
-
-    <p class="text-muted mb-1">
-      <strong>Category:</strong>
-      {{ product.category }}
-    </p>
-
-    {% if product.materials %}
-    <p class="text-muted mb-1">
-      <strong>Materials:</strong>
-      {{ product.materials }}
-    </p>
-    {% endif %} {% if product.size_or_quantity %}
-    <p class="text-muted mb-1">
-      <strong>Size/Quantity:</strong>
-      {{ product.size_or_quantity }}
-    </p>
-    {% endif %} {% if product.stock_quantity == 0 %}
-    <p class="text-danger fw-bold">Out of stock</p>
-
-    {% elif product.stock_quantity <= 5 %}
-    <p class="text-warning fw-bold">
-      Low stock — only {{ product.stock_quantity }} left
-    </p>
-
-    {% else %}
-    <p class="text-success fw-bold">In stock</p>
-    {% endif %} {% if product.ingredients %}
-    <p class="text-muted mb-1">
-      <strong>Ingredients:</strong>
-      {{ product.ingredients }}
-    </p>
-    {% endif %} {% if product.stock_quantity > 0 %}
-
-    <form method="POST" action="{% url 'add_to_bag' product.id %}" class="mt-4">
-      {% csrf_token %}
-
-      <label for="quantity" class="form-label"> Quantity </label>
-
-      <input
-        id="quantity"
-        type="number"
-        name="quantity"
-        value="1"
-        min="1"
-        max="{{ product.stock_quantity }}"
-        class="form-control mb-3"
-      />
-
-      <button type="submit" class="btn btn-primary">Add to Bag</button>
-    </form>
-
-    {% else %}
-
-    <button type="button" class="btn btn-secondary mt-4" disabled>
-      Out of Stock
-    </button>
-
-    {% endif %}
-
-    <hr class="my-5" />
-
-    <div class="reviews-section">
-      <h2>Customer Reviews</h2>
-
-      {% for review in reviews %}
-
-      <div class="card mb-3">
-        <div class="card-body">
-          <p class="card-title">{{ review.user.username }}</p>
-
-          <p class="mb-1">
-            <strong> {{ review.get_rating_display }} </strong>
-          </p>
-
-          <p class="card-text">{{ review.comment }}</p>
-
-          <small class="text-muted"> {{ review.date|date:"d M Y" }} </small>
-
-          {% if user == review.user %}
-          <div class="mt-2">
-            <a
-              href="{% url 'edit_review' review.id %}"
-              class="btn btn-sm btn-outline-primary"
-            >
-              Edit Review
-            </a>
-
-            <a
-              href="{% url 'delete_review' review.id %}"
-              class="btn btn-sm btn-outline-danger"
-            >
-              Delete Review
-            </a>
-          </div>
-          {% endif %}
-        </div>
-      </div>
-
-      {% empty %}
-
-      <p>No reviews yet. Be the first to review this product!</p>
-
-      {% endfor %}
-
-      <hr class="my-4" />
-
-      {% if user.is_authenticated %}
-
-      <h3>Leave a Review</h3>
-
-      <form method="POST">
-        {% csrf_token %} {{ form.as_p }}
-
-        <button type="submit" class="btn btn-primary">Submit Review</button>
-      </form>
-
+<section class="row g-5 align-items-start mb-5">
+  <div class="col-12 col-lg-5">
+    <div class="bg-white border rounded p-3 shadow-sm text-center">
+      {% if product.image %}
+        <img
+          class="img-fluid rounded"
+          src="{{ product.image.url }}"
+          alt="{{ product.name }}"
+        >
       {% else %}
-
-      <p>
-        You need to
-        <a href="{% url 'login' %}?next={{ request.path }}"> log in </a>
-        to leave a review.
-      </p>
-
+        <img
+          class="img-fluid rounded"
+          src="{% static 'images/no-image.jpg' %}"
+          alt="No image available for {{ product.name }}"
+        >
       {% endif %}
     </div>
   </div>
-</div>
+
+  <div class="col-12 col-lg-7">
+    <h1 class="mb-3">
+      {{ product.name }}
+    </h1>
+
+    <p class="fs-3 fw-bold mb-3">
+      £{{ product.price }}
+    </p>
+
+    {% if product.description %}
+      <p class="text-muted mb-4">
+        <strong>Description:</strong>
+        {{ product.description }}
+      </p>
+    {% endif %}
+
+    <div class="mb-3">
+      <p class="text-muted mb-2">
+        <strong>Brand:</strong>
+        {{ product.brand }}
+      </p>
+
+      <p class="text-muted mb-2">
+        <strong>Category:</strong>
+        {{ product.category }}
+      </p>
+
+      {% if product.materials %}
+        <p class="text-muted mb-2">
+          <strong>Materials:</strong>
+          {{ product.materials }}
+        </p>
+      {% endif %}
+
+      {% if product.size_or_quantity %}
+        <p class="text-muted mb-2">
+          <strong>Size/Quantity:</strong>
+          {{ product.size_or_quantity }}
+        </p>
+      {% endif %}
+
+      {% if product.ingredients %}
+        <p class="text-muted mb-2">
+          <strong>Ingredients:</strong>
+          {{ product.ingredients }}
+        </p>
+      {% endif %}
+    </div>
+
+    {% if product.stock_quantity == 0 %}
+      <p class="text-danger fw-bold">
+        Out of stock
+      </p>
+    {% elif product.stock_quantity <= 5 %}
+      <p class="fw-bold">
+        <span class="badge bg-warning text-dark">
+          Low stock — only {{ product.stock_quantity }} left
+        </span>
+      </p>
+    {% else %}
+      <p class="text-success fw-bold">
+        In stock
+      </p>
+    {% endif %}
+
+    {% if product.stock_quantity > 0 %}
+      <form
+        method="POST"
+        action="{% url 'add_to_bag' product.id %}"
+        class="mt-4"
+      >
+        {% csrf_token %}
+
+        <div class="row g-3 align-items-end">
+          <div class="col-12 col-sm-4 col-md-3">
+            <label for="quantity" class="form-label">
+              Quantity
+            </label>
+
+            <input
+              id="quantity"
+              type="number"
+              name="quantity"
+              value="1"
+              min="1"
+              max="{{ product.stock_quantity }}"
+              class="form-control"
+            >
+          </div>
+
+          <div class="col-12 col-sm-auto">
+            <button
+              type="submit"
+              class="btn btn-primary w-100"
+            >
+              Add to Bag
+            </button>
+          </div>
+        </div>
+      </form>
+    {% else %}
+      <button
+        type="button"
+        class="btn btn-secondary mt-4"
+        disabled
+      >
+        Out of Stock
+      </button>
+    {% endif %}
+  </div>
+</section>
+
+<hr class="my-5">
+
+<section
+  class="reviews-section"
+  aria-labelledby="customer-reviews-heading"
+>
+  <div class="row justify-content-center">
+    <div class="col-12 col-xl-10">
+      <h2 id="customer-reviews-heading" class="mb-4">
+        Customer Reviews
+      </h2>
+
+      {% for review in reviews %}
+        <article class="card mb-3">
+          <div class="card-body">
+            <div
+              class="d-flex flex-column flex-sm-row justify-content-between gap-2 mb-2"
+            >
+              <p class="card-title fw-bold mb-0">
+                {{ review.user.username }}
+              </p>
+
+              <small class="text-muted">
+                {{ review.date|date:"d M Y" }}
+              </small>
+            </div>
+
+            <p class="mb-2">
+              <strong>
+                {{ review.get_rating_display }}
+              </strong>
+            </p>
+
+            <p class="card-text mb-3">
+              {{ review.comment }}
+            </p>
+
+            {% if user == review.user %}
+              <div class="d-flex flex-wrap gap-2">
+                <a
+                  href="{% url 'edit_review' review.id %}"
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  Edit Review
+                </a>
+
+                <a
+                  href="{% url 'delete_review' review.id %}"
+                  class="btn btn-sm btn-outline-danger"
+                >
+                  Delete Review
+                </a>
+              </div>
+            {% endif %}
+          </div>
+        </article>
+
+      {% empty %}
+        <div class="alert alert-info">
+          <p class="mb-0">
+            No reviews yet. Be the first to review this product!
+          </p>
+        </div>
+      {% endfor %}
+
+      <hr class="my-4">
+
+      {% if user.is_authenticated %}
+        <div class="mb-5">
+          <h3 class="h4 mb-3">
+            Leave a Review
+          </h3>
+
+          <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-primary">
+              Submit Review
+            </button>
+          </form>
+        </div>
+      {% else %}
+        <div class="alert alert-light border mb-5">
+          <p class="mb-0">
+            You need to
+            <a href="{% url 'login' %}?next={{ request.path }}">log in</a>
+            to leave a review.
+          </p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
 
 {% endblock %}

@@ -170,10 +170,22 @@ footer p {
     outline-offset: 4px;
 }
 
+.home-hero {
+    background: linear-gradient(135deg, #ffffff 0%, #e8f6fc 100%);
+    border: 1px solid var(--pn-border);
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding-left: 3rem;
+    padding-right: 3rem;
+    overflow: hidden;
+}
+
 .home-logo {
-    max-width: 420px;
+    max-width: 360px;
     width: 100%;
     height: auto;
+    border-radius: 0.75rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
 #payment-form input, #payment-form select {
@@ -189,6 +201,11 @@ footer p {
         margin: 0.15rem 0;
 
         padding-left: 0.75rem;
+    }
+
+    .home-hero {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
     }
 
 }
