@@ -78,10 +78,9 @@ def product_detail(request, product_id):
     )
 
     reviews = product.reviews.all().order_by(
-    "-date",
-    "-id",
-)
-
+        "-date",
+        "-id",
+    )
 
     if request.method == "POST":
 
@@ -118,6 +117,7 @@ def product_detail(request, product_id):
         "products/product_detail.html",
         context,
     )
+
 
 @login_required
 def edit_review(request, review_id):
@@ -161,6 +161,7 @@ def edit_review(request, review_id):
         "products/reviews/edit_review.html",
         context,
     )
+
 
 @login_required
 def delete_review(request, review_id):

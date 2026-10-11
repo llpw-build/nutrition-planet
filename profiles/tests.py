@@ -19,9 +19,21 @@ class RegisterTests(TestCase):
 
         form = userRegisterForm()
 
-        self.assertEqual(form.fields["username"].widget.attrs["autocomplete"], "username")
-        self.assertEqual(form.fields["email"].widget.attrs["autocomplete"], "email")
-        self.assertEqual(form.fields["first_name"].widget.attrs["autocomplete"], "given-name")
+        self.assertEqual(
+            form.fields["username"].widget.attrs["autocomplete"],
+            "username"
+        )
+
+        self.assertEqual(
+            form.fields["email"].widget.attrs["autocomplete"],
+            "email"
+        )
+
+        self.assertEqual(
+            form.fields["first_name"].widget.attrs["autocomplete"],
+            "given-name"
+        )
+
 
 class UserProfileTests(TestCase):
     def test_logged_in_user_can_access_profile(self):

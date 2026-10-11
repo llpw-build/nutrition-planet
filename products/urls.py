@@ -1,5 +1,5 @@
-from django.urls import path 
-from . import views 
+from django.urls import path
+from . import views
 
 urlpatterns = [
     path(
@@ -15,32 +15,32 @@ urlpatterns = [
     ),
 
     path(
-    "reviews/<int:review_id>/edit/",
-    views.edit_review,
-    name="edit_review",
+        "reviews/<int:review_id>/edit/",
+        views.edit_review,
+        name="edit_review",
     ),
 
     path(
-    "reviews/<int:review_id>/delete/",
-    views.delete_review,
-    name="delete_review",
+        "reviews/<int:review_id>/delete/",
+        views.delete_review,
+        name="delete_review",
     ),
 
     path(
-    "add/",
-    views.add_product,
-    name="add_product",
+        "add/",
+        views.add_product,
+        name="add_product",
     ),
 
-   path(
-       "<int:product_id>/edit/",
-       views.edit_product,
-       name="edit_product",
-   ),
+    path(
+        "<int:product_id>/edit/",
+        views.edit_product,
+        name="edit_product",
+    ),
 
-   path(
-    "<int:product_id>/delete/",
-    views.delete_product,
-    name="delete_product",
-),
+    path(
+        "<int:product_id>/delete/",
+        views.delete_product,
+        name="delete_product",
+    ),
 ]

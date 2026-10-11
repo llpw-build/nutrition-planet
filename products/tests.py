@@ -551,6 +551,7 @@ class ReviewTests(TestCase):
             review.comment,
             "Original review.",
         )
+
     def test_review_owner_can_open_delete_confirmation(self):
         review = Review.objects.create(
             product=self.product,

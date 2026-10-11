@@ -37,7 +37,6 @@ class CheckoutTests(TestCase):
         }
         session.save()
 
-
     @patch("checkout.views.stripe.PaymentIntent.modify")
     def test_checkout_creates_order(self, mock_modify):
 
@@ -59,7 +58,6 @@ class CheckoutTests(TestCase):
             Order.objects.count(),
             1,
         )
-
 
     @patch("checkout.views.stripe.PaymentIntent.modify")
     def test_checkout_creates_order_line_item(self, mock_modify):
@@ -89,7 +87,6 @@ class CheckoutTests(TestCase):
             line_item.quantity,
             2,
         )
-
 
     @patch("checkout.views.stripe.PaymentIntent.modify")
     def test_checkout_success_clears_bag(self, mock_modify):
@@ -172,4 +169,3 @@ class CheckoutTests(TestCase):
             first_response.json()["order_id"],
             second_response.json()["order_id"],
         )
-

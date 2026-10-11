@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django import forms
 from .models import UserProfile
 
+
 class userRegisterForm (UserCreationForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=25, required=True)
@@ -13,7 +14,7 @@ class userRegisterForm (UserCreationForm):
         self.fields["username"].widget.attrs["autocomplete"] = "username"
         self.fields["email"].widget.attrs["autocomplete"] = "email"
         self.fields["first_name"].widget.attrs["autocomplete"] = "given-name"
-    
+
     class Meta:
         model = User
 
