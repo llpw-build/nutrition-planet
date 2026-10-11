@@ -91,11 +91,11 @@ main.container {
 }
 
 a {
-    color: #2685b5;
+    color: #17678f;
 }
 
 a:hover {
-    color: #17678f;
+    color: #0f4f70;
 }
 
 .form-control:focus, .form-select:focus {
