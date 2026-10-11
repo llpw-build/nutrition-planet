@@ -201,7 +201,7 @@ As mentioned above, my project has many Model Relationships which I will now out
 - Order and OrderLineItem have a one to many relationship. One Order may have many OrderLineItems.
 - Product and OrderlineItem have a one many relationship. One Product may appear in many OrderLineItems.
 
-### Technologies used
+## Technologies used
 
 HTML
 CSS
@@ -424,47 +424,81 @@ Throughout my project I regularly used git as you will see from my work history 
 
 I hosted my repository on GitHub and pushed my commits to it throughout.
 
-### Validation Testing
+## Validation Testing
 
-#### HTML Validation
+### HTML Validation
 
 The deployed website was tested using the W3C HTML Validator.
 
-##### Homepage
+For my resubmission, I carried out another HTML validation check on the main pages of my website. This included the homepage, product catalogue, product detail pages, registration, review edit and delete pages and the order confirmation page. The validation originally found that some navigation list items were not correctly contained inside a list, as well as review aspects that did not have their own headings. I corrected both issues and checked the pages again, with no errors or warnings remaining this time. Any informational messages about trailing slashes on void elements did not affect the validity or functionality of the website.
+
+#### Homepage
 
 ![Homepage HTML Validation](documentation/homepageval.png)
 
-##### Products
+#### Products
 
 ![Products HTML Validation](documentation/productsval.png)
 
-##### Shopping Bag
+#### Shopping Bag
 
 ![Shopping Bag HTML Validation](documentation/bagval.png)
 
-##### User Profile
+#### User Profile
 
 ![Profile HTML Validation](documentation/profileval.png)
 
-##### Login
+#### Login
 
 ![Login HTML Validation](documentation/loginval.png)
 
-##### Register
+#### Register
 
 ![Register HTML Validation](documentation/registerval.png)
 
 #### CSS Validation
 
-The CSS used throughout Planet Nutrition was tested using the W3C CSS Validation.
+My CSS used throughout Planet Nutrition was tested using the W3C CSS Validator. The final stylesheet passed with no errors at all. During the accessibility testing I carried out, Lighthouse identified that the original blue product links did not have enough contrast against the light background. I changed these links to a darker shade of blue while keeping the original colour scheme as intended, and the product catalogue and product details pages then received full accessibility scores.
 
 ![CSS Validation](documentation/cssvalidator.png)
+
+#### Python Validation
+
+The Python files that were changed during my resubmission were checked using the Code Institute Python Linter. These included the product views, URLs and tests, checkout views and tests, and the profile forms and tests. The issues found were related to formatting, including indentation, blank lines and line length. I corrected these issues without changing the functionality and checked each file again, with all of them passing with no errors.
+
+After making the changes, I ran Django's system check and the complete automated test suite again. The system check found no issues and all 33 tests passed.
+
+![Python Validation](documentation/python-validation.png)
 
 #### JavaScript Validation
 
 The JavaScript used for the Stripe checkout functionality was checked using JSHint. The warnings shown relate to modern JavaScript features such as `const`, `async` functions and template literals, which require the appropriate ES6/ES8 configuration in JSHint.
 
 ![JSHint Validation](documentation/jshint.png)
+
+#### Accessibility and Lighthouse Testing
+
+I used Chrome Lighthouse on the deployed website to test accessibility, best practices and SEO. I tested the homepage, product catalogue, product details, registration and checkout pages.
+
+The homepage at first, received 91 for SEO because it did not have a meta description. I added a description to the base template and it then received 100 on the next test. The product catalogue and product details pages originally received 95 for accessibility because the blue product links did not have enough contrast against the light background. I changed the links to a darker blue and both pages then received 100 as expected.
+
+| Page | Accessibility | Best Practices | SEO |
+| --- | ---: | ---: | ---: |
+| Homepage | 100 | 100 | 100 |
+| Product catalogue | 100 | 100 | 100 |
+| Product details | 100 | 100 | 100 |
+| Registration | 100 | 100 | 100 |
+| Checkout | 100 | 100 | 100 |
+
+I also manually tested the website using only the keyboard. I checked the navigation, search, filters, sorting, authentication, bag, checkout, Stripe payment fields and the review edit and delete actions. Focus remained visible, the tab order was logical and I did not find any keyboard traps and all buttons worked as expected.
+
+![Lighthouse Testing](documentation/lighthouse.png)
+
+#### Responsive and Browser Testing
+
+I manually tested the deployed website at mobile, tablet and desktop sizes. I checked the homepage, product catalogue, product details, bag, authentication, profile, review pages, checkout and order confirmation. The content remained usable at each size, the product cards stacked correctly and I did not find any horizontal overflow, overlapping content or controls that could not be used.
+
+I also tested the main user journey in both Google Chrome and Microsoft Edge to ensure there were no errors on a different browser. This included navigation, searching and filtering products, logging in, using the bag, opening checkout, accessing the profile, using the review controls and opening the external footer links. The tested functionality and layout worked as I expected in both browsers.
 
 ## Credits
 
