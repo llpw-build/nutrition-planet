@@ -76,7 +76,7 @@
 
       <div class="row g-3 align-items-end">
         <div class="col-12 col-sm-4 col-md-3">
-          <label for="quantity" class="form-label"> Quantity </label>
+          <label for="quantity" class="form-label">Quantity</label>
 
           <input
             id="quantity"
@@ -100,6 +100,22 @@
     <button type="button" class="btn btn-secondary mt-4" disabled>
       Out of Stock
     </button>
+    {% endif %} {% if user.is_staff %}
+    <div class="d-flex flex-wrap gap-2 mt-4">
+      <a
+        href="{% url 'edit_product' product.id %}"
+        class="btn btn-sm btn-outline-primary"
+      >
+        Edit Product
+      </a>
+
+      <a
+        href="{% url 'delete_product' product.id %}"
+        class="btn btn-sm btn-outline-danger"
+      >
+        Delete Product
+      </a>
+    </div>
     {% endif %}
   </div>
 </section>
@@ -125,7 +141,7 @@
           </div>
 
           <p class="mb-2">
-            <strong> {{ review.get_rating_display }} </strong>
+            <strong>{{ review.get_rating_display }}</strong>
           </p>
 
           <p class="card-text mb-3">{{ review.comment }}</p>

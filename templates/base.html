@@ -73,6 +73,13 @@
                   </button>
                 </form>
               </li>
+
+              {% if user.is_staff %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'add_product' %}"> Add Product </a>
+              </li>
+              {% endif %}
+
               {% else %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}"> Login </a>
